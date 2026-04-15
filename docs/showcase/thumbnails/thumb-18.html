@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vaporwave Thumbnail</title>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Bungee+Shade&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      overflow: hidden;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: 'VT323', monospace;
+      background: linear-gradient(135deg, #FF71CE 0%, #B967FF 50%, #01CDFE 100%);
+      color: #ffffff;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image:
+        linear-gradient(0deg, transparent 24%, rgba(255, 113, 206, 0.08) 25%, rgba(255, 113, 206, 0.08) 26%, transparent 27%, transparent 74%, rgba(255, 113, 206, 0.08) 75%, rgba(255, 113, 206, 0.08) 76%, transparent 77%, transparent),
+        linear-gradient(90deg, transparent 24%, rgba(1, 205, 254, 0.08) 25%, rgba(1, 205, 254, 0.08) 26%, transparent 27%, transparent 74%, rgba(1, 205, 254, 0.08) 75%, rgba(1, 205, 254, 0.08) 76%, transparent 77%, transparent);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .container {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+    }
+
+    .hero {
+      flex: 0 0 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero h1 {
+      font-size: 56px;
+      font-weight: 400;
+      margin: 0 0 6px 0;
+      font-family: 'Bungee Shade', cursive;
+      text-shadow:
+        0 0 10px rgba(255, 113, 206, 0.8),
+        0 0 20px rgba(255, 113, 206, 0.6),
+        0 0 40px rgba(185, 103, 255, 0.4);
+      letter-spacing: 2px;
+    }
+
+    .hero p {
+      font-size: 14px;
+      margin: 0;
+      font-family: 'IBM Plex Mono', monospace;
+      text-shadow: 0 0 10px rgba(1, 205, 254, 0.5);
+    }
+
+    .grid {
+      flex: 0 0 50%;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr 1fr;
+      overflow: hidden;
+      border-top: 1px solid rgba(255, 113, 206, 0.3);
+    }
+
+    .cell {
+      padding: 8px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-right: 1px solid rgba(1, 205, 254, 0.2);
+      border-bottom: 1px solid rgba(255, 113, 206, 0.2);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+    }
+
+    .cell:nth-child(3n) { border-right: none; }
+    .cell:nth-child(n+7) { border-bottom: none; }
+
+    .stat-value { color: #FF71CE; font-weight: bold; }
+    .stat-change { color: #01CDFE; font-size: 11px; }
+    .stat-label { color: rgba(255, 255, 255, 0.7); font-size: 10px; margin-bottom: 4px; }
+    .stat-row { display: flex; gap: 8px; align-items: center; }
+
+    .bar { background: linear-gradient(180deg, #FF71CE, #B967FF); border-radius: 2px; margin: 0 2px; width: 8px; }
+
+    .btn-p {
+      padding: 6px 12px;
+      background: #FF71CE;
+      color: #1a0020;
+      border: none;
+      border-radius: 4px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 0 15px rgba(255, 113, 206, 0.5);
+    }
+
+    .btn-o {
+      padding: 6px 12px;
+      background: transparent;
+      color: #01CDFE;
+      border: 1px solid #01CDFE;
+      border-radius: 4px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      cursor: pointer;
+    }
+
+    .input-l { display: block; font-size: 10px; color: rgba(255, 255, 255, 0.7); margin-bottom: 4px; }
+    .input-f {
+      width: 100%;
+      padding: 4px 6px;
+      border: 1px solid #01CDFE;
+      background: rgba(1, 205, 254, 0.1);
+      color: #01CDFE;
+      border-radius: 2px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+    }
+    .input-f::placeholder { color: rgba(1, 205, 254, 0.5); }
+
+    .badge {
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 10px;
+      font-weight: 600;
+      display: inline-block;
+      margin: 0 2px;
+    }
+    .b-1 { background: rgba(255, 113, 206, 0.3); color: #FF71CE; }
+    .b-2 { background: rgba(1, 205, 254, 0.3); color: #01CDFE; }
+    .b-3 { background: rgba(185, 103, 255, 0.3); color: #B967FF; }
+
+    .prog-l { font-size: 10px; color: rgba(255, 255, 255, 0.7); margin-bottom: 3px; }
+    .prog-track { width: 100%; height: 6px; background: rgba(255, 113, 206, 0.2); border-radius: 3px; overflow: hidden; }
+    .prog-fill { width: 65%; height: 100%; background: linear-gradient(90deg, #FF71CE, #01CDFE); }
+
+    .toggle { display: flex; align-items: center; gap: 6px; }
+    .toggle-t { width: 24px; height: 14px; background: #01CDFE; border-radius: 7px; position: relative; }
+    .toggle-k { width: 12px; height: 12px; background: #1a0020; border-radius: 50%; position: absolute; top: 1px; left: 1px; }
+    .toggle-l { font-size: 10px; }
+
+    .av {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      font-weight: bold;
+      margin: 0 -8px;
+    }
+    .av-1 { background: #FF71CE; color: #1a0020; }
+    .av-2 { background: #B967FF; color: #ffffff; }
+    .av-3 { background: #01CDFE; color: #1a0020; }
+    .av-4 { background: rgba(255, 113, 206, 0.6); color: #ffffff; }
+
+    .tbl { width: 100%; font-size: 10px; border-collapse: collapse; }
+    .tbl th { color: #FF71CE; font-weight: 600; text-align: left; padding: 2px; border-bottom: 1px solid #01CDFE; }
+    .tbl td { padding: 2px; border-bottom: 1px solid rgba(1, 205, 254, 0.2); }
+    .tbl .r { text-align: right; }
+  </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <h1>Vaporwave</h1>
+            <p>Aesthetic digital nostalgia</p>
+        </div>
+        <div class="grid">
+            <div class="cell"><div class="stat"><div class="stat-label">Revenue</div><div class="stat-row"><span class="stat-value">$12.4k</span><span class="stat-change">↑ 8%</span></div></div></div>
+            <div class="cell"><div class="chart"><div class="bar" style="height:40%"></div><div class="bar" style="height:65%"></div><div class="bar" style="height:50%"></div><div class="bar" style="height:90%"></div><div class="bar" style="height:70%"></div><div class="bar" style="height:100%"></div><div class="bar" style="height:80%"></div></div></div>
+            <div class="cell"><div class="btn-pair"><button class="btn-p">Save</button><button class="btn-o">Cancel</button></div></div>
+            <div class="cell"><div class="input-g"><label class="input-l">Email</label><input type="text" class="input-f" placeholder="you@example.com"></div></div>
+            <div class="cell"><div class="badges"><span class="badge b-1">Active</span><span class="badge b-2">Online</span><span class="badge b-3">Pending</span></div></div>
+            <div class="cell"><div class="prog"><div class="prog-l">Upload</div><div class="prog-track"><div class="prog-fill"></div></div></div></div>
+            <div class="cell"><div class="toggle"><div class="toggle-t"><div class="toggle-k"></div></div><span class="toggle-l">Dark mode</span></div></div>
+            <div class="cell"><div class="avatars"><div class="av av-1">A</div><div class="av av-2">B</div><div class="av av-3">C</div><div class="av av-4">D</div></div></div>
+            <div class="cell"><table class="tbl"><tr><th>Item</th><th class="r">Qty</th></tr><tr><td>Widget</td><td class="r">128</td></tr><tr><td>Module</td><td class="r">64</td></tr></table></div>
+        </div>
+    </div>
+</body>
+</html>

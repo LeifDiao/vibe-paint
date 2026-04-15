@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyberpunk Neon</title>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        html, body {
+            overflow: hidden;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Share Tech Mono', monospace;
+            background: #060610;
+            color: #00FF41;
+        }
+
+        @keyframes scan {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 100px; }
+        }
+
+        .container {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 0 20px;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none;
+            background: repeating-linear-gradient(0deg, rgba(0,0,0,0.15), rgba(0,0,0,0.15) 1px, transparent 1px, transparent 2px);
+            animation: scan 8s linear infinite;
+            z-index: 10;
+        }
+
+        .hero {
+            flex: 0 0 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 2px;
+            background: #00FF41;
+            box-shadow: 0 0 10px rgba(0,255,65,0.5);
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-shadow: 0 0 20px rgba(0,255,65,0.8), 0 0 40px rgba(0,255,65,0.4);
+        }
+
+        .hero p {
+            font-size: 11px;
+            margin: 8px 0 0 0;
+            letter-spacing: 1px;
+            opacity: 0.6;
+        }
+
+        .grid {
+            flex: 0 0 50%;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr;
+            background: #060610;
+            overflow: hidden;
+            position: relative;
+            z-index: 2;
+        }
+
+        .cell {
+            padding: 8px 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid rgba(0,255,65,0.12);
+            border-right: 1px solid rgba(0,255,65,0.12);
+        }
+
+        .cell:nth-child(3n) { border-right: none; }
+        .cell:nth-child(n+7) { border-bottom: none; }
+
+        /* ── Stat ── */
+        .stat { width: 100%; text-align: center; }
+        .stat-label { font-size: 7px; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.4; }
+        .stat-value { font-size: 17px; font-weight: 700; text-shadow: 0 0 10px rgba(0,255,65,0.6); }
+
+        /* ── Chart ── */
+        .chart { display: flex; align-items: flex-end; gap: 3px; height: 26px; width: 100%; justify-content: center; }
+        .bar { width: 6px; background: #00FF41; box-shadow: 0 0 4px rgba(0,255,65,0.4); border-radius: 1px 1px 0 0; }
+
+        /* ── Buttons ── */
+        .btn-pair { display: flex; gap: 5px; }
+        .btn-p { border: 1px solid #00FF41; background: transparent; color: #00FF41; padding: 5px 12px; font-family: 'Share Tech Mono', monospace; font-size: 8px; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; box-shadow: 0 0 6px rgba(0,255,65,0.3); }
+        .btn-o { border: 1px solid rgba(0,255,65,0.3); background: rgba(0,255,65,0.08); color: #00FF41; padding: 5px 12px; font-family: 'Share Tech Mono', monospace; font-size: 8px; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; }
+
+        /* ── Input ── */
+        .input-g { display: flex; flex-direction: column; gap: 2px; width: 100%; }
+        .input-l { font-size: 7px; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.4; }
+        .input-f { border: 1px solid rgba(0,255,65,0.3); background: rgba(0,255,65,0.05); padding: 5px 8px; font-size: 8px; width: 100%; box-sizing: border-box; font-family: 'Share Tech Mono', monospace; color: #00FF41; }
+        .input-f::placeholder { color: rgba(0,255,65,0.2); }
+
+        /* ── Badges ── */
+        .badges { display: flex; gap: 4px; flex-wrap: wrap; justify-content: center; }
+        .badge { padding: 3px 8px; font-size: 7px; text-transform: uppercase; letter-spacing: 0.5px; border: 1px solid; }
+        .b-1 { border-color: #00FF41; color: #00FF41; background: rgba(0,255,65,0.08); }
+        .b-2 { border-color: #ff3c3c; color: #ff3c3c; background: rgba(255,60,60,0.08); }
+        .b-3 { border-color: #FFE66D; color: #FFE66D; background: rgba(255,230,109,0.08); }
+
+        /* ── Progress ── */
+        .prog { display: flex; flex-direction: column; gap: 3px; width: 100%; }
+        .prog-l { font-size: 7px; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.4; }
+        .prog-track { width: 100%; height: 4px; background: rgba(0,255,65,0.1); border: 1px solid rgba(0,255,65,0.15); }
+        .prog-fill { height: 100%; width: 78%; background: #00FF41; box-shadow: 0 0 6px rgba(0,255,65,0.5); }
+
+        /* ── Toggle ── */
+        .toggle { display: flex; align-items: center; gap: 6px; }
+        .toggle-t { width: 30px; height: 14px; border: 1px solid rgba(0,255,65,0.4); background: rgba(0,255,65,0.15); position: relative; }
+        .toggle-k { width: 10px; height: 10px; background: #00FF41; position: absolute; top: 1px; right: 1px; box-shadow: 0 0 6px rgba(0,255,65,0.5); }
+        .toggle-l { font-size: 7px; text-transform: uppercase; opacity: 0.5; }
+
+        /* ── Avatars / Status ── */
+        .status-row { display: flex; gap: 8px; align-items: center; }
+        .st { display: flex; align-items: center; gap: 3px; font-size: 7px; text-transform: uppercase; }
+        .st-dot { width: 5px; height: 5px; border-radius: 50%; }
+        .st-on .st-dot { background: #00FF41; box-shadow: 0 0 6px #00FF41; }
+        .st-warn .st-dot { background: #FFE66D; box-shadow: 0 0 6px #FFE66D; }
+        .st-off .st-dot { background: #ff3c3c; box-shadow: 0 0 6px #ff3c3c; }
+
+        /* ── Table ── */
+        .tbl { width: 100%; font-size: 7px; border-collapse: collapse; }
+        .tbl th { text-align: left; text-transform: uppercase; letter-spacing: 0.3px; padding: 2px 0; border-bottom: 1px solid rgba(0,255,65,0.2); opacity: 0.5; }
+        .tbl td { padding: 2px 0; }
+        .tbl .r { text-align: right; text-shadow: 0 0 6px rgba(0,255,65,0.4); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <h1>CYBERPUNK NEON</h1>
+            <p>> initializing system_</p>
+        </div>
+        <div class="grid">
+            <div class="cell"><div class="stat"><div class="stat-label">Uptime</div><div class="stat-value">99.7%</div></div></div>
+            <div class="cell"><div class="chart"><div class="bar" style="height:40%"></div><div class="bar" style="height:70%"></div><div class="bar" style="height:55%"></div><div class="bar" style="height:90%"></div><div class="bar" style="height:65%"></div><div class="bar" style="height:100%"></div><div class="bar" style="height:75%"></div></div></div>
+            <div class="cell"><div class="btn-pair"><button class="btn-p">Exec</button><button class="btn-o">Abort</button></div></div>
+            <div class="cell"><div class="input-g"><label class="input-l">Query</label><input type="text" class="input-f" placeholder="> search_"></div></div>
+            <div class="cell"><div class="badges"><span class="badge b-1">Online</span><span class="badge b-2">Error</span><span class="badge b-3">Warn</span></div></div>
+            <div class="cell"><div class="prog"><div class="prog-l">CPU Load</div><div class="prog-track"><div class="prog-fill"></div></div></div></div>
+            <div class="cell"><div class="toggle"><div class="toggle-t"><div class="toggle-k"></div></div><span class="toggle-l">Stealth</span></div></div>
+            <div class="cell"><div class="status-row"><span class="st st-on"><span class="st-dot"></span>SYS</span><span class="st st-warn"><span class="st-dot"></span>NET</span><span class="st st-off"><span class="st-dot"></span>GPU</span></div></div>
+            <div class="cell"><table class="tbl"><tr><th>Node</th><th class="r">Ping</th></tr><tr><td>Alpha</td><td class="r">12ms</td></tr><tr><td>Bravo</td><td class="r">8ms</td></tr></table></div>
+        </div>
+    </div>
+</body>
+</html>

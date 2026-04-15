@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Synthwave Thumbnail</title>
+  <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      overflow: hidden;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: 'Rajdhani', sans-serif;
+      background: linear-gradient(180deg, #1A0030 0%, #2D0052 50%, #1A0030 100%);
+      color: #ffffff;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 240, 255, 0.03) 2px, rgba(0, 240, 255, 0.03) 4px),
+        repeating-linear-gradient(90deg, transparent, transparent 100px, rgba(255, 45, 149, 0.05) 100px, rgba(255, 45, 149, 0.05) 200px);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .container {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+    }
+
+    .hero {
+      flex: 0 0 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      border-bottom: 1px solid rgba(255, 45, 149, 0.2);
+    }
+
+    .hero h1 {
+      font-size: 56px;
+      font-weight: 700;
+      margin: 0 0 6px 0;
+      font-family: 'Audiowide', sans-serif;
+      text-shadow: 0 0 20px rgba(255, 45, 149, 0.8), 0 0 40px rgba(0, 240, 255, 0.4);
+      letter-spacing: 2px;
+    }
+
+    .hero p {
+      font-size: 14px;
+      margin: 0;
+      font-family: 'Rajdhani', sans-serif;
+      text-shadow: 0 0 10px rgba(255, 45, 149, 0.5);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .grid {
+      flex: 0 0 50%;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr 1fr;
+      overflow: hidden;
+    }
+
+    .cell {
+      padding: 8px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-right: 2px solid rgba(255, 45, 149, 0.3);
+      border-bottom: 2px solid rgba(0, 240, 255, 0.15);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 12px;
+    }
+
+    .cell:nth-child(3n) { border-right: none; }
+    .cell:nth-child(n+7) { border-bottom: none; }
+
+    .stat-value { color: #00F0FF; font-weight: 700; }
+    .stat-change { color: #FF2D95; font-size: 11px; font-weight: 600; }
+    .stat-label { color: rgba(255, 255, 255, 0.7); font-size: 10px; margin-bottom: 4px; text-transform: uppercase; }
+    .stat-row { display: flex; gap: 8px; align-items: center; }
+
+    .bar { background: linear-gradient(180deg, #FF2D95, #00F0FF); border-radius: 1px; margin: 0 2px; width: 8px; box-shadow: 0 0 10px rgba(0, 240, 255, 0.4); }
+
+    .btn-p {
+      padding: 6px 12px;
+      background: #FF2D95;
+      color: #1A0030;
+      border: 2px solid #FF2D95;
+      border-radius: 4px;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 0 20px rgba(255, 45, 149, 0.5);
+    }
+
+    .btn-o {
+      padding: 6px 12px;
+      background: transparent;
+      color: #00F0FF;
+      border: 2px solid #00F0FF;
+      border-radius: 4px;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .input-l { display: block; font-size: 10px; color: rgba(255, 255, 255, 0.7); margin-bottom: 4px; text-transform: uppercase; }
+    .input-f {
+      width: 100%;
+      padding: 4px 6px;
+      border: 2px solid #00F0FF;
+      background: rgba(0, 240, 255, 0.05);
+      color: #00F0FF;
+      border-radius: 2px;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 10px;
+    }
+    .input-f::placeholder { color: rgba(0, 240, 255, 0.4); }
+
+    .badge {
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 10px;
+      font-weight: 700;
+      display: inline-block;
+      margin: 0 2px;
+      border: 1px solid;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .b-1 { background: rgba(255, 45, 149, 0.2); color: #FF2D95; border-color: #FF2D95; }
+    .b-2 { background: rgba(0, 240, 255, 0.2); color: #00F0FF; border-color: #00F0FF; }
+    .b-3 { background: rgba(255, 213, 0, 0.2); color: #FFD500; border-color: #FFD500; }
+
+    .prog-l { font-size: 10px; color: rgba(255, 255, 255, 0.7); margin-bottom: 3px; text-transform: uppercase; }
+    .prog-track { width: 100%; height: 6px; background: rgba(255, 45, 149, 0.15); border-radius: 1px; overflow: hidden; border: 1px solid rgba(0, 240, 255, 0.2); }
+    .prog-fill { width: 65%; height: 100%; background: linear-gradient(90deg, #FF2D95, #00F0FF); box-shadow: 0 0 10px rgba(0, 240, 255, 0.5); }
+
+    .toggle { display: flex; align-items: center; gap: 6px; }
+    .toggle-t { width: 24px; height: 14px; background: #00F0FF; border-radius: 2px; position: relative; }
+    .toggle-k { width: 12px; height: 12px; background: #1A0030; border-radius: 1px; position: absolute; top: 1px; left: 1px; }
+    .toggle-l { font-size: 10px; text-transform: uppercase; }
+
+    .av {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      font-weight: 700;
+      margin: 0 -8px;
+      border: 1px solid;
+    }
+    .av-1 { background: rgba(255, 45, 149, 0.2); color: #FF2D95; border-color: #FF2D95; }
+    .av-2 { background: rgba(0, 240, 255, 0.2); color: #00F0FF; border-color: #00F0FF; }
+    .av-3 { background: rgba(255, 213, 0, 0.2); color: #FFD500; border-color: #FFD500; }
+    .av-4 { background: rgba(0, 180, 255, 0.2); color: #00B4FF; border-color: #00B4FF; }
+
+    .tbl { width: 100%; font-size: 10px; border-collapse: collapse; }
+    .tbl th { color: #00F0FF; font-weight: 700; text-align: left; padding: 2px; border-bottom: 2px solid #FF2D95; text-transform: uppercase; }
+    .tbl td { padding: 2px; border-bottom: 1px solid rgba(0, 240, 255, 0.15); }
+    .tbl .r { text-align: right; }
+  </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <h1>Synthwave</h1>
+            <p>Neon-lit retrowave</p>
+        </div>
+        <div class="grid">
+            <div class="cell"><div class="stat"><div class="stat-label">Revenue</div><div class="stat-row"><span class="stat-value">$12.4k</span><span class="stat-change">↑ 8%</span></div></div></div>
+            <div class="cell"><div class="chart"><div class="bar" style="height:40%"></div><div class="bar" style="height:65%"></div><div class="bar" style="height:50%"></div><div class="bar" style="height:90%"></div><div class="bar" style="height:70%"></div><div class="bar" style="height:100%"></div><div class="bar" style="height:80%"></div></div></div>
+            <div class="cell"><div class="btn-pair"><button class="btn-p">Save</button><button class="btn-o">Cancel</button></div></div>
+            <div class="cell"><div class="input-g"><label class="input-l">Email</label><input type="text" class="input-f" placeholder="you@example.com"></div></div>
+            <div class="cell"><div class="badges"><span class="badge b-1">Active</span><span class="badge b-2">Online</span><span class="badge b-3">Pending</span></div></div>
+            <div class="cell"><div class="prog"><div class="prog-l">Upload</div><div class="prog-track"><div class="prog-fill"></div></div></div></div>
+            <div class="cell"><div class="toggle"><div class="toggle-t"><div class="toggle-k"></div></div><span class="toggle-l">Dark mode</span></div></div>
+            <div class="cell"><div class="avatars"><div class="av av-1">A</div><div class="av av-2">B</div><div class="av av-3">C</div><div class="av av-4">D</div></div></div>
+            <div class="cell"><table class="tbl"><tr><th>Item</th><th class="r">Qty</th></tr><tr><td>Widget</td><td class="r">128</td></tr><tr><td>Module</td><td class="r">64</td></tr></table></div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editorial Mono - Thumbnail</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      overflow: hidden;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      background: #ffffff;
+      color: #111111;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: -50%;
+      right: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(135deg, transparent 49.9%, #000000 49.9%, #000000 50.1%, transparent 50.1%);
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0.02;
+    }
+
+    .container {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero {
+      flex: 0 0 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      background: #ffffff;
+      border-bottom: 3px solid #000000;
+      padding: 0 20px;
+    }
+
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 56px;
+      font-weight: 700;
+      margin: 0 0 6px 0;
+      letter-spacing: -0.5px;
+      color: #000000;
+      line-height: 1.1;
+    }
+
+    .hero p {
+      font-size: 14px;
+      margin: 0;
+      color: #333333;
+      letter-spacing: 0.5px;
+      font-weight: 500;
+    }
+
+    .grid {
+      flex: 0 0 50%;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr 1fr;
+      overflow: hidden;
+      background: #ffffff;
+    }
+
+    .cell {
+      padding: 8px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-right: 1px solid #e5e5e5;
+      border-bottom: 1px solid #e5e5e5;
+      font-size: 12px;
+      background: #ffffff;
+    }
+
+    .cell:nth-child(3n) {
+      border-right: none;
+    }
+
+    .cell:nth-child(n+7) {
+      border-bottom: none;
+    }
+
+    /* Stat */
+    .stat {
+      text-align: center;
+      font-size: 11px;
+      font-weight: 600;
+      color: #111111;
+    }
+
+    .stat-label {
+      font-size: 10px;
+      color: #666666;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .stat-row {
+      display: flex;
+      gap: 6px;
+      align-items: baseline;
+    }
+
+    .stat-value {
+      font-size: 14px;
+      font-weight: 700;
+      color: #000000;
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    .stat-change {
+      font-size: 11px;
+      color: #1a7a3a;
+      font-weight: 600;
+    }
+
+    /* Chart */
+    .chart {
+      display: flex;
+      align-items: flex-end;
+      gap: 2px;
+      height: 40px;
+      width: 100%;
+    }
+
+    .bar {
+      flex: 1;
+      background: #000000;
+      border: none;
+    }
+
+    /* Buttons */
+    .btn-pair {
+      display: flex;
+      gap: 6px;
+    }
+
+    button {
+      padding: 6px 12px;
+      font-size: 11px;
+      font-weight: 700;
+      border: 1px solid #000000;
+      background: #ffffff;
+      color: #000000;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-family: inherit;
+    }
+
+    .btn-p {
+      background: #000000;
+      color: #ffffff;
+    }
+
+    .btn-o {
+      background: #ffffff;
+      color: #000000;
+      border-color: #000000;
+    }
+
+    /* Input */
+    .input-g {
+      width: 100%;
+      padding: 0 4px;
+    }
+
+    .input-l {
+      display: block;
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 3px;
+      color: #000000;
+    }
+
+    .input-f {
+      width: 100%;
+      padding: 4px 6px;
+      font-size: 10px;
+      border: none;
+      border-bottom: 1px solid #000000;
+      background: transparent;
+      color: #000000;
+      font-family: inherit;
+      box-sizing: border-box;
+    }
+
+    /* Badges */
+    .badges {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .badge {
+      padding: 3px 8px;
+      font-size: 9px;
+      font-weight: 700;
+      border: 1px solid #000000;
+      background: transparent;
+      color: #000000;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .b-1 {
+      border-color: #1a7a3a;
+      color: #1a7a3a;
+    }
+
+    .b-2 {
+      border-color: #000000;
+      color: #000000;
+    }
+
+    .b-3 {
+      border-color: #8b6914;
+      color: #8b6914;
+    }
+
+    /* Progress */
+    .prog {
+      width: 100%;
+      padding: 0 4px;
+    }
+
+    .prog-l {
+      font-size: 9px;
+      font-weight: 700;
+      margin-bottom: 3px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #000000;
+    }
+
+    .prog-track {
+      width: 100%;
+      height: 6px;
+      background: #f5f5f5;
+      border: none;
+    }
+
+    .prog-fill {
+      height: 100%;
+      background: #000000;
+      width: 65%;
+    }
+
+    /* Toggle */
+    .toggle {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .toggle-t {
+      width: 28px;
+      height: 14px;
+      background: #f5f5f5;
+      border: 1px solid #000000;
+      position: relative;
+    }
+
+    .toggle-k {
+      width: 10px;
+      height: 10px;
+      background: #000000;
+      position: absolute;
+      top: 2px;
+      left: 2px;
+    }
+
+    .toggle-l {
+      font-size: 10px;
+      font-weight: 700;
+      color: #000000;
+    }
+
+    /* Avatars */
+    .avatars {
+      display: flex;
+      gap: 4px;
+    }
+
+    .av {
+      width: 20px;
+      height: 20px;
+      border: 1px solid #000000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      font-weight: 700;
+      background: #ffffff;
+      color: #000000;
+    }
+
+    /* Table */
+    .tbl {
+      width: 100%;
+      font-size: 10px;
+      border-collapse: collapse;
+      border: none;
+    }
+
+    .tbl th, .tbl td {
+      padding: 4px 6px;
+      border: none;
+      border-bottom: 1px solid #e5e5e5;
+      text-align: left;
+      color: #111111;
+    }
+
+    .tbl th {
+      font-weight: 700;
+      background: transparent;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      font-size: 9px;
+      border-bottom: 2px solid #000000;
+      color: #000000;
+    }
+
+    .tbl tr:last-child td {
+      border-bottom: none;
+    }
+
+    .tbl td.r {
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <h1>Editorial Mono</h1>
+            <p>Black & white editorial</p>
+        </div>
+        <div class="grid">
+            <div class="cell"><div class="stat"><div class="stat-label">Revenue</div><div class="stat-row"><span class="stat-value">$12.4k</span><span class="stat-change">↑ 8%</span></div></div></div>
+            <div class="cell"><div class="chart"><div class="bar" style="height:40%"></div><div class="bar" style="height:65%"></div><div class="bar" style="height:50%"></div><div class="bar" style="height:90%"></div><div class="bar" style="height:70%"></div><div class="bar" style="height:100%"></div><div class="bar" style="height:80%"></div></div></div>
+            <div class="cell"><div class="btn-pair"><button class="btn-p">Save</button><button class="btn-o">Cancel</button></div></div>
+            <div class="cell"><div class="input-g"><label class="input-l">Email</label><input type="text" class="input-f" placeholder="you@example.com"></div></div>
+            <div class="cell"><div class="badges"><span class="badge b-1">Active</span><span class="badge b-2">Online</span><span class="badge b-3">Pending</span></div></div>
+            <div class="cell"><div class="prog"><div class="prog-l">Upload</div><div class="prog-track"><div class="prog-fill"></div></div></div></div>
+            <div class="cell"><div class="toggle"><div class="toggle-t"><div class="toggle-k"></div></div><span class="toggle-l">Dark mode</span></div></div>
+            <div class="cell"><div class="avatars"><div class="av av-1">A</div><div class="av av-2">B</div><div class="av av-3">C</div><div class="av av-4">D</div></div></div>
+            <div class="cell"><table class="tbl"><tr><th>Item</th><th class="r">Qty</th></tr><tr><td>Widget</td><td class="r">128</td></tr><tr><td>Module</td><td class="r">64</td></tr></table></div>
+        </div>
+    </div>
+</body>
+</html>

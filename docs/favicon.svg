@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#818cf8"/>
+      <stop offset="50%" stop-color="#c084fc"/>
+      <stop offset="100%" stop-color="#f472b6"/>
+    </linearGradient>
+  </defs>
+  <rect width="32" height="32" rx="7" fill="#18181b"/>
+  <!-- Brush bristles -->
+  <path d="M8 5C7 5 6 6 6 7.5L6 15C6 16 7 17 8 17L16 17C17 17 18 16 18 15L18 7.5C18 6 17 5 16 5Z" fill="url(#g)"/>
+  <!-- Ferrule band -->
+  <rect x="7" y="17" width="10" height="2.5" rx="0.5" fill="#71717a"/>
+  <!-- Handle -->
+  <rect x="9" y="19.5" width="6" height="8.5" rx="1.5" fill="#3f3f46"/>
+  <!-- Paint drip -->
+  <circle cx="7.5" cy="8" r="1.2" fill="#f472b6" opacity="0.5"/>
+  <circle cx="15" cy="10" r="0.9" fill="#818cf8" opacity="0.4"/>
+</svg>

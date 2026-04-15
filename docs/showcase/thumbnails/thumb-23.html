@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warm Soft</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        html, body {
+            overflow: hidden;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Nunito', sans-serif;
+            background: #EDE8D4;
+            color: #333;
+        }
+
+        .container {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        .hero {
+            flex: 0 0 50%;
+            background: #F4F1DE;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #E07A5F, #81B29A);
+        }
+
+        .color-dots {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .dot { width: 11px; height: 11px; border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .d-terra { background: #E07A5F; }
+        .d-sage { background: #81B29A; }
+        .d-gold { background: #F2CC8F; }
+
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 800;
+            margin: 0;
+            color: #333;
+        }
+
+        .hero p {
+            font-size: 13px;
+            color: #999;
+            margin: 8px 0 0 0;
+            font-weight: 600;
+        }
+
+        .grid {
+            flex: 0 0 50%;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr;
+            background: #F4F1DE;
+            overflow: hidden;
+            gap: 6px;
+            padding: 6px 0;
+        }
+
+        .cell {
+            padding: 8px 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(224,122,95,0.08);
+        }
+
+        /* ── Stat ── */
+        .stat { width: 100%; }
+        .stat-label { font-size: 8px; color: #aaa; font-weight: 700; }
+        .stat-row { display: flex; align-items: baseline; gap: 5px; }
+        .stat-value { font-size: 17px; font-weight: 800; color: #333; }
+        .stat-change { font-size: 9px; font-weight: 700; color: #81B29A; }
+
+        /* ── Chart ── */
+        .chart { display: flex; align-items: flex-end; gap: 3px; height: 26px; width: 100%; justify-content: center; }
+        .bar { width: 7px; border-radius: 4px 4px 0 0; }
+        .bar:nth-child(odd) { background: #E07A5F; }
+        .bar:nth-child(even) { background: #81B29A; }
+
+        /* ── Buttons ── */
+        .btn-pair { display: flex; gap: 5px; }
+        .btn-p { background: #E07A5F; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-size: 9px; font-weight: 700; font-family: 'Nunito', sans-serif; cursor: pointer; }
+        .btn-o { background: white; color: #81B29A; border: 2px solid #81B29A; padding: 6px 12px; border-radius: 8px; font-size: 9px; font-weight: 700; font-family: 'Nunito', sans-serif; cursor: pointer; }
+
+        /* ── Input ── */
+        .input-g { display: flex; flex-direction: column; gap: 2px; width: 100%; }
+        .input-l { font-size: 8px; font-weight: 700; color: #aaa; }
+        .input-f { background: #F4F1DE; border: 2px solid #E07A5F; padding: 5px 8px; border-radius: 8px; font-size: 9px; width: 100%; box-sizing: border-box; font-family: 'Nunito', sans-serif; color: #333; }
+        .input-f::placeholder { color: #ccc; }
+
+        /* ── Badges ── */
+        .badges { display: flex; gap: 4px; flex-wrap: wrap; justify-content: center; }
+        .badge { padding: 3px 8px; border-radius: 999px; font-size: 8px; font-weight: 700; }
+        .b-1 { background: rgba(224,122,95,0.2); color: #E07A5F; }
+        .b-2 { background: rgba(129,178,154,0.2); color: #5a9a78; }
+        .b-3 { background: rgba(242,204,143,0.3); color: #b8860b; }
+
+        /* ── Progress ── */
+        .prog { display: flex; flex-direction: column; gap: 3px; width: 100%; }
+        .prog-l { font-size: 8px; font-weight: 700; color: #aaa; }
+        .prog-track { width: 100%; height: 7px; background: rgba(224,122,95,0.12); border-radius: 4px; overflow: hidden; }
+        .prog-fill { height: 100%; width: 60%; background: linear-gradient(90deg, #E07A5F, #81B29A); border-radius: 4px; }
+
+        /* ── Toggle ── */
+        .toggle { display: flex; align-items: center; gap: 6px; }
+        .toggle-t { width: 32px; height: 18px; background: #E07A5F; border-radius: 9px; position: relative; border: none; }
+        .toggle-k { width: 14px; height: 14px; background: white; border-radius: 50%; position: absolute; top: 2px; right: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .toggle-l { font-size: 8px; color: #aaa; font-weight: 600; }
+
+        /* ── Avatars ── */
+        .avatars { display: flex; }
+        .av { width: 22px; height: 22px; border-radius: 50%; border: 2px solid white; margin-left: -5px; display: flex; align-items: center; justify-content: center; font-size: 11px; background: white; box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
+        .av:first-child { margin-left: 0; }
+
+        /* ── Table ── */
+        .tbl { width: 100%; font-size: 7px; border-collapse: collapse; }
+        .tbl th { text-align: left; font-weight: 700; color: #aaa; padding: 2px 0; border-bottom: 1px solid rgba(224,122,95,0.2); }
+        .tbl td { padding: 2px 0; color: #555; font-weight: 600; }
+        .tbl .r { text-align: right; font-weight: 700; color: #333; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <div class="color-dots">
+                <div class="dot d-terra"></div>
+                <div class="dot d-sage"></div>
+                <div class="dot d-gold"></div>
+            </div>
+            <h1>Warm Soft</h1>
+            <p>Friendly by design</p>
+        </div>
+        <div class="grid">
+            <div class="cell"><div class="stat"><div class="stat-label">Orders</div><div class="stat-row"><span class="stat-value">$8.2k</span><span class="stat-change">↑ 5%</span></div></div></div>
+            <div class="cell"><div class="chart"><div class="bar" style="height:45%"></div><div class="bar" style="height:60%"></div><div class="bar" style="height:80%"></div><div class="bar" style="height:55%"></div><div class="bar" style="height:95%"></div><div class="bar" style="height:70%"></div><div class="bar" style="height:100%"></div></div></div>
+            <div class="cell"><div class="btn-pair"><button class="btn-p">Try Now</button><button class="btn-o">Learn</button></div></div>
+            <div class="cell"><div class="input-g"><label class="input-l">Search</label><input type="text" class="input-f" placeholder="Find items..."></div></div>
+            <div class="cell"><div class="badges"><span class="badge b-1">New</span><span class="badge b-2">Sale</span><span class="badge b-3">Hot</span></div></div>
+            <div class="cell"><div class="prog"><div class="prog-l">Shipping</div><div class="prog-track"><div class="prog-fill"></div></div></div></div>
+            <div class="cell"><div class="toggle"><div class="toggle-t"><div class="toggle-k"></div></div><span class="toggle-l">Notify</span></div></div>
+            <div class="cell"><div class="avatars"><div class="av">🐱</div><div class="av">🐶</div><div class="av">🐰</div><div class="av">🦊</div></div></div>
+            <div class="cell"><table class="tbl"><tr><th>Item</th><th class="r">Price</th></tr><tr><td>Candle</td><td class="r">$18</td></tr><tr><td>Mug</td><td class="r">$12</td></tr></table></div>
+        </div>
+    </div>
+</body>
+</html>

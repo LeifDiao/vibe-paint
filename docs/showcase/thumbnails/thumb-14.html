@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Art Deco - Thumbnail</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      overflow: hidden;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: 'Lato', sans-serif;
+      background: #0d0d0d;
+      color: #f5f0e8;
+    }
+
+    .container {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+    }
+
+    .hero {
+      flex: 0 0 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      background: linear-gradient(135deg, #1a1a1a 0%, #2a2722 100%);
+      border-bottom: 2px solid #c9a84c;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #c9a84c, transparent);
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 56px;
+      font-weight: 900;
+      margin: 0 0 6px 0;
+      letter-spacing: -1px;
+      color: #d4af37;
+      text-transform: uppercase;
+    }
+
+    .hero p {
+      font-size: 14px;
+      margin: 0;
+      color: #a8a39a;
+      letter-spacing: 1px;
+    }
+
+    .grid {
+      flex: 0 0 50%;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr 1fr;
+      overflow: hidden;
+      background: #0d0d0d;
+    }
+
+    .cell {
+      padding: 8px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-right: 1px solid #c9a84c;
+      border-bottom: 1px solid #c9a84c;
+      font-size: 12px;
+      background: rgba(26, 26, 26, 0.8);
+    }
+
+    .cell:nth-child(3n) {
+      border-right: none;
+    }
+
+    .cell:nth-child(n+7) {
+      border-bottom: none;
+    }
+
+    /* Stat */
+    .stat {
+      text-align: center;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 700;
+      color: #d4af37;
+    }
+
+    .stat-label {
+      font-size: 10px;
+      color: #a8a39a;
+      margin-bottom: 4px;
+    }
+
+    .stat-row {
+      display: flex;
+      gap: 6px;
+      align-items: baseline;
+    }
+
+    .stat-value {
+      font-size: 14px;
+      font-weight: 700;
+      color: #d4af37;
+    }
+
+    .stat-change {
+      font-size: 11px;
+      color: #8fad56;
+    }
+
+    /* Chart */
+    .chart {
+      display: flex;
+      align-items: flex-end;
+      gap: 3px;
+      height: 40px;
+      width: 100%;
+    }
+
+    .bar {
+      flex: 1;
+      background: linear-gradient(135deg, #c9a84c 0%, #d4af37 100%);
+      border: 1px solid #a8a39a;
+    }
+
+    /* Buttons */
+    .btn-pair {
+      display: flex;
+      gap: 6px;
+    }
+
+    button {
+      padding: 6px 12px;
+      font-size: 11px;
+      font-weight: 700;
+      border: 1px solid #c9a84c;
+      background: transparent;
+      color: #c9a84c;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-family: inherit;
+    }
+
+    .btn-p {
+      background: #c9a84c;
+      color: #0d0d0d;
+    }
+
+    .btn-o {
+      background: transparent;
+      color: #c9a84c;
+    }
+
+    /* Input */
+    .input-g {
+      width: 100%;
+      padding: 0 4px;
+    }
+
+    .input-l {
+      display: block;
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 3px;
+      color: #d4af37;
+    }
+
+    .input-f {
+      width: 100%;
+      padding: 4px 6px;
+      font-size: 10px;
+      border: 1px solid #a8a39a;
+      background: rgba(26, 26, 26, 0.5);
+      color: #f5f0e8;
+      font-family: inherit;
+      box-sizing: border-box;
+    }
+
+    /* Badges */
+    .badges {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .badge {
+      padding: 3px 8px;
+      font-size: 9px;
+      font-weight: 700;
+      border: 1px solid #c9a84c;
+      background: rgba(201, 168, 76, 0.15);
+      color: #d4af37;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Progress */
+    .prog {
+      width: 100%;
+      padding: 0 4px;
+    }
+
+    .prog-l {
+      font-size: 9px;
+      font-weight: 700;
+      margin-bottom: 3px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #d4af37;
+    }
+
+    .prog-track {
+      width: 100%;
+      height: 6px;
+      background: rgba(26, 26, 26, 0.8);
+      border: 1px solid #c9a84c;
+    }
+
+    .prog-fill {
+      height: 100%;
+      background: linear-gradient(135deg, #c9a84c 0%, #d4af37 100%);
+      width: 65%;
+    }
+
+    /* Toggle */
+    .toggle {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .toggle-t {
+      width: 28px;
+      height: 14px;
+      background: rgba(26, 26, 26, 0.8);
+      border: 1px solid #c9a84c;
+      position: relative;
+    }
+
+    .toggle-k {
+      width: 10px;
+      height: 10px;
+      background: #c9a84c;
+      position: absolute;
+      top: 2px;
+      left: 2px;
+    }
+
+    .toggle-l {
+      font-size: 10px;
+      font-weight: 700;
+      color: #d4af37;
+    }
+
+    /* Avatars */
+    .avatars {
+      display: flex;
+      gap: 4px;
+    }
+
+    .av {
+      width: 20px;
+      height: 20px;
+      border: 1px solid #c9a84c;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      font-weight: 700;
+      background: rgba(201, 168, 76, 0.1);
+      color: #d4af37;
+    }
+
+    /* Table */
+    .tbl {
+      width: 100%;
+      font-size: 10px;
+      border-collapse: collapse;
+      border: 1px solid #c9a84c;
+    }
+
+    .tbl th, .tbl td {
+      padding: 4px 6px;
+      border: 1px solid #c9a84c;
+      text-align: left;
+      color: #f5f0e8;
+    }
+
+    .tbl th {
+      font-weight: 700;
+      background: rgba(201, 168, 76, 0.15);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-size: 9px;
+      color: #d4af37;
+    }
+
+    .tbl td.r {
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <h1>Art Deco</h1>
+            <p>Gilded age glamour</p>
+        </div>
+        <div class="grid">
+            <div class="cell"><div class="stat"><div class="stat-label">Revenue</div><div class="stat-row"><span class="stat-value">$12.4k</span><span class="stat-change">↑ 8%</span></div></div></div>
+            <div class="cell"><div class="chart"><div class="bar" style="height:40%"></div><div class="bar" style="height:65%"></div><div class="bar" style="height:50%"></div><div class="bar" style="height:90%"></div><div class="bar" style="height:70%"></div><div class="bar" style="height:100%"></div><div class="bar" style="height:80%"></div></div></div>
+            <div class="cell"><div class="btn-pair"><button class="btn-p">Save</button><button class="btn-o">Cancel</button></div></div>
+            <div class="cell"><div class="input-g"><label class="input-l">Email</label><input type="text" class="input-f" placeholder="you@example.com"></div></div>
+            <div class="cell"><div class="badges"><span class="badge b-1">Active</span><span class="badge b-2">Online</span><span class="badge b-3">Pending</span></div></div>
+            <div class="cell"><div class="prog"><div class="prog-l">Upload</div><div class="prog-track"><div class="prog-fill"></div></div></div></div>
+            <div class="cell"><div class="toggle"><div class="toggle-t"><div class="toggle-k"></div></div><span class="toggle-l">Dark mode</span></div></div>
+            <div class="cell"><div class="avatars"><div class="av av-1">A</div><div class="av av-2">B</div><div class="av av-3">C</div><div class="av av-4">D</div></div></div>
+            <div class="cell"><table class="tbl"><tr><th>Item</th><th class="r">Qty</th></tr><tr><td>Widget</td><td class="r">128</td></tr><tr><td>Module</td><td class="r">64</td></tr></table></div>
+        </div>
+    </div>
+</body>
+</html>

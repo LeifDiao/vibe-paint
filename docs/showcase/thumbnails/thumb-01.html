@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clean Minimal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        html, body {
+            overflow: hidden;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background: #f3f4f6;
+            color: #111827;
+        }
+
+        .container {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        /* ── Hero: top 50% ── */
+        .hero {
+            flex: 0 0 50%;
+            background:
+                repeating-linear-gradient(0deg, transparent, transparent 19px, #e5e7eb 19px, #e5e7eb 20px),
+                repeating-linear-gradient(90deg, transparent, transparent 19px, #e5e7eb 19px, #e5e7eb 20px),
+                linear-gradient(135deg, #ffffff, #f9fafb);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #6366f1;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 900;
+            margin: 0 0 6px 0;
+            letter-spacing: -1px;
+        }
+
+        .hero p {
+            font-size: 14px;
+            color: #6b7280;
+            margin: 0;
+            font-weight: 500;
+        }
+
+        /* ── Components: bottom 50%, 3x3 grid ── */
+        .grid {
+            flex: 0 0 50%;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr;
+            background: white;
+            overflow: hidden;
+        }
+
+        .cell {
+            padding: 8px 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid #e5e7eb;
+            border-right: 1px solid #e5e7eb;
+            background: white;
+        }
+
+        .cell:nth-child(3n) { border-right: none; }
+        .cell:nth-child(n+7) { border-bottom: none; }
+
+        /* ── Stat ── */
+        .stat { width: 100%; }
+        .stat-label { font-size: 8px; color: #9ca3af; font-weight: 600; text-transform: uppercase; letter-spacing: 0.3px; }
+        .stat-row { display: flex; align-items: baseline; gap: 5px; }
+        .stat-value { font-size: 17px; font-weight: 800; color: #111827; }
+        .stat-change { font-size: 9px; font-weight: 700; color: #10b981; }
+
+        /* ── Mini chart ── */
+        .chart { display: flex; align-items: flex-end; gap: 3px; height: 26px; width: 100%; justify-content: center; }
+        .bar { width: 7px; border-radius: 2px 2px 0 0; background: #6366f1; }
+        .bar:nth-child(even) { background: #a5b4fc; }
+
+        /* ── Buttons ── */
+        .btn-pair { display: flex; gap: 5px; }
+        .btn-p { background: #6366f1; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 9px; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; }
+        .btn-o { background: white; color: #6366f1; border: 1.5px solid #6366f1; padding: 6px 12px; border-radius: 6px; font-size: 9px; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; }
+
+        /* ── Input ── */
+        .input-g { display: flex; flex-direction: column; gap: 2px; width: 100%; }
+        .input-l { font-size: 8px; color: #6b7280; font-weight: 600; text-transform: uppercase; letter-spacing: 0.3px; }
+        .input-f { background: white; border: 1px solid #e5e7eb; padding: 5px 8px; border-radius: 6px; font-size: 9px; width: 100%; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+        /* ── Badges ── */
+        .badges { display: flex; gap: 4px; flex-wrap: wrap; justify-content: center; }
+        .badge { padding: 3px 8px; border-radius: 999px; font-size: 8px; font-weight: 600; }
+        .b-indigo { background: #eef2ff; color: #6366f1; }
+        .b-green { background: #ecfdf5; color: #10b981; }
+        .b-amber { background: #fffbeb; color: #d97706; }
+
+        /* ── Progress ── */
+        .prog { display: flex; flex-direction: column; gap: 3px; width: 100%; }
+        .prog-l { font-size: 8px; color: #9ca3af; font-weight: 600; text-transform: uppercase; letter-spacing: 0.3px; }
+        .prog-track { width: 100%; height: 5px; background: #f3f4f6; border-radius: 3px; overflow: hidden; }
+        .prog-fill { height: 100%; width: 72%; background: #6366f1; border-radius: 3px; }
+
+        /* ── Toggle ── */
+        .toggle { display: flex; align-items: center; gap: 6px; }
+        .toggle-t { width: 30px; height: 16px; background: #6366f1; border-radius: 8px; position: relative; }
+        .toggle-k { width: 12px; height: 12px; background: white; border-radius: 50%; position: absolute; top: 2px; right: 2px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
+        .toggle-l { font-size: 8px; color: #6b7280; font-weight: 500; }
+
+        /* ── Avatars ── */
+        .avatars { display: flex; }
+        .av { width: 22px; height: 22px; border-radius: 50%; border: 2px solid white; margin-left: -5px; display: flex; align-items: center; justify-content: center; font-size: 8px; font-weight: 700; color: white; }
+        .av:first-child { margin-left: 0; }
+        .av-1 { background: #6366f1; } .av-2 { background: #8b5cf6; } .av-3 { background: #ec4899; } .av-4 { background: #f59e0b; }
+
+        /* ── Table ── */
+        .tbl { width: 100%; font-size: 7px; border-collapse: collapse; }
+        .tbl th { text-align: left; font-weight: 700; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.3px; padding: 2px 0; border-bottom: 1px solid #e5e7eb; }
+        .tbl td { padding: 2px 0; color: #374151; font-weight: 500; }
+        .tbl .r { text-align: right; font-weight: 700; color: #111827; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <h1>Clean Minimal</h1>
+            <p>Precision meets simplicity</p>
+        </div>
+        <div class="grid">
+            <div class="cell"><div class="stat"><div class="stat-label">Revenue</div><div class="stat-row"><span class="stat-value">$12.4k</span><span class="stat-change">↑ 8%</span></div></div></div>
+            <div class="cell"><div class="chart"><div class="bar" style="height:40%"></div><div class="bar" style="height:65%"></div><div class="bar" style="height:50%"></div><div class="bar" style="height:90%"></div><div class="bar" style="height:70%"></div><div class="bar" style="height:100%"></div><div class="bar" style="height:80%"></div></div></div>
+            <div class="cell"><div class="btn-pair"><button class="btn-p">Save</button><button class="btn-o">Cancel</button></div></div>
+            <div class="cell"><div class="input-g"><label class="input-l">Email</label><input type="text" class="input-f" placeholder="you@example.com"></div></div>
+            <div class="cell"><div class="badges"><span class="badge b-indigo">Active</span><span class="badge b-green">Online</span><span class="badge b-amber">Pending</span></div></div>
+            <div class="cell"><div class="prog"><div class="prog-l">Upload</div><div class="prog-track"><div class="prog-fill"></div></div></div></div>
+            <div class="cell"><div class="toggle"><div class="toggle-t"><div class="toggle-k"></div></div><span class="toggle-l">Dark mode</span></div></div>
+            <div class="cell"><div class="avatars"><div class="av av-1">A</div><div class="av av-2">B</div><div class="av av-3">C</div><div class="av av-4">D</div></div></div>
+            <div class="cell"><table class="tbl"><tr><th>Item</th><th class="r">Qty</th></tr><tr><td>Widget</td><td class="r">128</td></tr><tr><td>Module</td><td class="r">64</td></tr></table></div>
+        </div>
+    </div>
+</body>
+</html>

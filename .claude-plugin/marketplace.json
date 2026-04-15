@@ -1,0 +1,13 @@
+{
+  "name": "vibe-paint-marketplace",
+  "owner": {
+    "name": "Leif Diao"
+  },
+  "plugins": [
+    {
+      "name": "vibe-paint",
+      "description": "Reskin your entire project's UI in one command. 30 design styles, WCAG audit, content-aware polish.",
+      "source": "./"
+    }
+  ]
+}

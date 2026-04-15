@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pixel Retro Thumbnail</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      overflow: hidden;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: 'Press Start 2P', monospace;
+      background: #1D1F2B;
+      color: #ffffff;
+      image-rendering: pixelated;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: repeating-linear-gradient(0deg, rgba(0,0,0,0.15) 0px, rgba(0,0,0,0.15) 2px, transparent 2px, transparent 4px);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .container {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+    }
+
+    .hero {
+      flex: 0 0 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      border-bottom: 2px solid #454A5E;
+    }
+
+    .hero h1 {
+      font-size: 56px;
+      font-weight: 700;
+      margin: 0 0 6px 0;
+      font-family: 'Press Start 2P', monospace;
+      color: #4ADE80;
+      letter-spacing: 2px;
+    }
+
+    .hero p {
+      font-size: 14px;
+      margin: 0;
+      font-family: 'Press Start 2P', monospace;
+      color: #FBBF24;
+    }
+
+    .grid {
+      flex: 0 0 50%;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr 1fr;
+      overflow: hidden;
+    }
+
+    .cell {
+      padding: 8px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-right: 2px solid #454A5E;
+      border-bottom: 2px solid #454A5E;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 8px;
+      background: #2A2D3E;
+    }
+
+    .cell:nth-child(3n) { border-right: none; }
+    .cell:nth-child(n+7) { border-bottom: none; }
+
+    .stat-value { color: #4ADE80; font-weight: 700; }
+    .stat-change { color: #FBBF24; font-size: 8px; }
+    .stat-label { color: #a8aac0; font-size: 8px; margin-bottom: 4px; }
+    .stat-row { display: flex; gap: 8px; align-items: center; }
+
+    .bar { background: #4ADE80; border-radius: 0px; margin: 0 2px; width: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); }
+
+    .btn-p {
+      padding: 6px 12px;
+      background: #4ADE80;
+      color: #1D1F2B;
+      border: 2px solid #22C452;
+      border-radius: 0px;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+      image-rendering: pixelated;
+    }
+
+    .btn-o {
+      padding: 6px 12px;
+      background: #2A2D3E;
+      color: #FBBF24;
+      border: 2px solid #FBBF24;
+      border-radius: 0px;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .input-l { display: block; font-size: 8px; color: #a8aac0; margin-bottom: 4px; }
+    .input-f {
+      width: 100%;
+      padding: 4px 6px;
+      border: 2px solid #454A5E;
+      background: #2A2D3E;
+      color: #4ADE80;
+      border-radius: 0px;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 8px;
+    }
+    .input-f::placeholder { color: #8a8c9a; }
+
+    .badge {
+      padding: 3px 8px;
+      border-radius: 0px;
+      font-size: 8px;
+      font-weight: 700;
+      display: inline-block;
+      margin: 0 2px;
+      border: 2px solid;
+    }
+    .b-1 { background: rgba(74, 222, 128, 0.2); color: #4ADE80; border-color: #4ADE80; }
+    .b-2 { background: rgba(251, 191, 36, 0.2); color: #FBBF24; border-color: #FBBF24; }
+    .b-3 { background: rgba(239, 68, 68, 0.2); color: #EF4444; border-color: #EF4444; }
+
+    .prog-l { font-size: 8px; color: #a8aac0; margin-bottom: 3px; }
+    .prog-track { width: 100%; height: 6px; background: #3A3E52; border-radius: 0px; overflow: hidden; border: 2px solid #454A5E; }
+    .prog-fill { width: 65%; height: 100%; background: #4ADE80; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); }
+
+    .toggle { display: flex; align-items: center; gap: 6px; }
+    .toggle-t { width: 24px; height: 14px; background: #4ADE80; border-radius: 0px; position: relative; border: 2px solid #22C452; }
+    .toggle-k { width: 10px; height: 10px; background: #1D1F2B; border-radius: 0px; position: absolute; top: 1px; left: 1px; }
+    .toggle-l { font-size: 8px; }
+
+    .av {
+      width: 20px;
+      height: 20px;
+      border-radius: 0px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8px;
+      font-weight: 700;
+      margin: 0 -8px;
+      border: 2px solid;
+    }
+    .av-1 { background: rgba(74, 222, 128, 0.2); color: #4ADE80; border-color: #4ADE80; }
+    .av-2 { background: rgba(251, 191, 36, 0.2); color: #FBBF24; border-color: #FBBF24; }
+    .av-3 { background: rgba(59, 130, 246, 0.2); color: #3B82F6; border-color: #3B82F6; }
+    .av-4 { background: rgba(239, 68, 68, 0.2); color: #EF4444; border-color: #EF4444; }
+
+    .tbl { width: 100%; font-size: 8px; border-collapse: collapse; }
+    .tbl th { color: #4ADE80; font-weight: 700; text-align: left; padding: 2px; border-bottom: 2px solid #4ADE80; }
+    .tbl td { padding: 2px; border-bottom: 1px solid #454A5E; }
+    .tbl .r { text-align: right; }
+  </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <h1>Pixel Retro</h1>
+            <p>8-bit game aesthetic</p>
+        </div>
+        <div class="grid">
+            <div class="cell"><div class="stat"><div class="stat-label">Revenue</div><div class="stat-row"><span class="stat-value">$12.4k</span><span class="stat-change">↑ 8%</span></div></div></div>
+            <div class="cell"><div class="chart"><div class="bar" style="height:40%"></div><div class="bar" style="height:65%"></div><div class="bar" style="height:50%"></div><div class="bar" style="height:90%"></div><div class="bar" style="height:70%"></div><div class="bar" style="height:100%"></div><div class="bar" style="height:80%"></div></div></div>
+            <div class="cell"><div class="btn-pair"><button class="btn-p">Save</button><button class="btn-o">Cancel</button></div></div>
+            <div class="cell"><div class="input-g"><label class="input-l">Email</label><input type="text" class="input-f" placeholder="you@example.com"></div></div>
+            <div class="cell"><div class="badges"><span class="badge b-1">Active</span><span class="badge b-2">Online</span><span class="badge b-3">Pending</span></div></div>
+            <div class="cell"><div class="prog"><div class="prog-l">Upload</div><div class="prog-track"><div class="prog-fill"></div></div></div></div>
+            <div class="cell"><div class="toggle"><div class="toggle-t"><div class="toggle-k"></div></div><span class="toggle-l">Dark mode</span></div></div>
+            <div class="cell"><div class="avatars"><div class="av av-1">A</div><div class="av av-2">B</div><div class="av av-3">C</div><div class="av av-4">D</div></div></div>
+            <div class="cell"><table class="tbl"><tr><th>Item</th><th class="r">Qty</th></tr><tr><td>Widget</td><td class="r">128</td></tr><tr><td>Module</td><td class="r">64</td></tr></table></div>
+        </div>
+    </div>
+</body>
+</html>

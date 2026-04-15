@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Y2K Futurism - Thumbnail</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) translateX(0px); }
+      25% { transform: translateY(-30px) translateX(15px); }
+      50% { transform: translateY(-20px) translateX(-20px); }
+      75% { transform: translateY(-40px) translateX(25px); }
+    }
+
+    @keyframes shimmer {
+      0%, 100% { opacity: 0.4; filter: hue-rotate(0deg); }
+      50% { opacity: 0.8; filter: hue-rotate(60deg); }
+    }
+
+    html, body {
+      overflow: hidden;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: 'Exo 2', sans-serif;
+      background: linear-gradient(135deg, #D0D8E0 0%, #B8C0CC 50%, #A8B0BC 100%);
+      color: #1a1a1a;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background:
+        radial-gradient(circle 300px at 20% 30%, rgba(255, 105, 180, 0.15) 0%, transparent 50%),
+        radial-gradient(circle 280px at 80% 20%, rgba(123, 104, 238, 0.15) 0%, transparent 50%),
+        radial-gradient(circle 250px at 40% 70%, rgba(100, 200, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle 260px at 70% 60%, rgba(255, 182, 193, 0.12) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+      animation: float 15s ease-in-out infinite, shimmer 4s ease-in-out infinite;
+      mix-blend-mode: screen;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255, 0.03) 2px, rgba(255,255,255, 0.03) 4px),
+        repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255,255,255, 0.03) 2px, rgba(255,255,255, 0.03) 4px);
+      background-size: 100% 100%, 100% 100%;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.5;
+    }
+
+    .container {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero {
+      flex: 0 0 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      background: linear-gradient(135deg, rgba(240, 240, 240, 0.95) 0%, rgba(224, 224, 224, 0.9) 100%);
+      border-bottom: 3px solid #7B68EE;
+      box-shadow: 0 12px 32px rgba(123, 104, 238, 0.3), 6px 6px 0px rgba(255, 105, 180, 0.15);
+    }
+
+    .hero h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 56px;
+      font-weight: 900;
+      margin: 0 0 6px 0;
+      letter-spacing: 1px;
+      background: linear-gradient(120deg, #7B68EE, #FF69B4, #7B68EE);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: 14px;
+      margin: 0;
+      color: #4a4a4a;
+      letter-spacing: 1px;
+      font-weight: 600;
+    }
+
+    .grid {
+      flex: 0 0 50%;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr 1fr;
+      overflow: hidden;
+      background: linear-gradient(135deg, rgba(232, 232, 232, 0.8) 0%, rgba(224, 224, 224, 0.85) 100%);
+    }
+
+    .cell {
+      padding: 8px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-right: 2px solid #A8A8A8;
+      border-bottom: 2px solid #A8A8A8;
+      font-size: 12px;
+      background: rgba(255, 255, 255, 0.6);
+    }
+
+    .cell:nth-child(3n) {
+      border-right: none;
+    }
+
+    .cell:nth-child(n+7) {
+      border-bottom: none;
+    }
+
+    /* Stat */
+    .stat {
+      text-align: center;
+      font-size: 11px;
+      font-weight: 700;
+      color: #1a1a1a;
+      letter-spacing: 1px;
+    }
+
+    .stat-label {
+      font-size: 10px;
+      color: #777777;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .stat-row {
+      display: flex;
+      gap: 6px;
+      align-items: baseline;
+    }
+
+    .stat-value {
+      font-size: 14px;
+      font-weight: 700;
+      background: linear-gradient(120deg, #7B68EE 0%, #FF69B4 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stat-change {
+      font-size: 11px;
+      color: #22c55e;
+      font-weight: 700;
+    }
+
+    /* Chart */
+    .chart {
+      display: flex;
+      align-items: flex-end;
+      gap: 3px;
+      height: 40px;
+      width: 100%;
+    }
+
+    .bar {
+      flex: 1;
+      background: linear-gradient(135deg, rgba(123, 104, 238, 0.9), rgba(255, 105, 180, 0.8));
+      border: 1px solid rgba(255, 105, 180, 0.3);
+      box-shadow: 0 4px 16px rgba(123, 104, 238, 0.3), 3px 3px 0px rgba(255, 105, 180, 0.2);
+    }
+
+    /* Buttons */
+    .btn-pair {
+      display: flex;
+      gap: 6px;
+    }
+
+    button {
+      padding: 6px 14px;
+      font-size: 11px;
+      font-weight: 700;
+      border: 2px solid;
+      background: linear-gradient(135deg, rgba(230,230,230,0.9) 0%, rgba(200,200,200,0.7) 100%);
+      color: #1a1a1a;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-family: inherit;
+      border-radius: 16px;
+      border-color: rgba(160,160,160,0.6);
+      box-shadow: 0 4px 12px rgba(123, 104, 238, 0.2), 3px 3px 0px rgba(255, 105, 180, 0.1);
+      transition: all 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    button::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 400ms;
+    }
+
+    .btn-p {
+      background: linear-gradient(135deg, #7B68EE 0%, #FF69B4 100%);
+      color: #ffffff;
+      border-color: rgba(123, 104, 238, 0.6);
+      box-shadow: 0 8px 20px rgba(123, 104, 238, 0.4), 4px 4px 0px rgba(255, 105, 180, 0.2);
+    }
+
+    .btn-o {
+      background: linear-gradient(135deg, rgba(230,230,230,0.9) 0%, rgba(200,200,200,0.7) 100%);
+      color: #1a1a1a;
+    }
+
+    /* Input */
+    .input-g {
+      width: 100%;
+      padding: 0 4px;
+    }
+
+    .input-l {
+      display: block;
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 3px;
+      color: #1a1a1a;
+    }
+
+    .input-f {
+      width: 100%;
+      padding: 4px 6px;
+      font-size: 10px;
+      border: 2px solid #A8A8A8;
+      background: rgba(255, 255, 255, 0.8);
+      color: #1a1a1a;
+      font-family: inherit;
+      box-sizing: border-box;
+      border-radius: 4px;
+    }
+
+    /* Badges */
+    .badges {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .badge {
+      padding: 3px 10px;
+      font-size: 9px;
+      font-weight: 700;
+      border: 1px solid rgba(123, 104, 238, 0.5);
+      background: linear-gradient(135deg, rgba(224, 220, 255, 0.8), rgba(255, 224, 240, 0.8));
+      color: #1a1a1a;
+      border-radius: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      box-shadow: 0 4px 12px rgba(123, 104, 238, 0.2), 2px 2px 0px rgba(255, 105, 180, 0.15);
+    }
+
+    .b-1 {
+      background: linear-gradient(135deg, rgba(220, 252, 231, 0.9), rgba(220, 240, 220, 0.9));
+      border-color: #22c55e;
+    }
+
+    .b-3 {
+      background: linear-gradient(135deg, rgba(254, 243, 199, 0.9), rgba(245, 220, 180, 0.9));
+      border-color: #f59e0b;
+    }
+
+    /* Progress */
+    .prog {
+      width: 100%;
+      padding: 0 4px;
+    }
+
+    .prog-l {
+      font-size: 9px;
+      font-weight: 700;
+      margin-bottom: 3px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #1a1a1a;
+    }
+
+    .prog-track {
+      width: 100%;
+      height: 6px;
+      background: rgba(200, 200, 200, 0.5);
+      border: 2px solid #A8A8A8;
+      border-radius: 3px;
+    }
+
+    .prog-fill {
+      height: 100%;
+      background: linear-gradient(135deg, #7B68EE 0%, #FF69B4 100%);
+      width: 65%;
+      border-radius: 1px;
+      box-shadow: 0 0 12px rgba(123, 104, 238, 0.4);
+    }
+
+    /* Toggle */
+    .toggle {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .toggle-t {
+      width: 28px;
+      height: 14px;
+      background: linear-gradient(135deg, rgba(200, 200, 200, 0.6), rgba(180, 180, 180, 0.6));
+      border: 2px solid #A8A8A8;
+      position: relative;
+      border-radius: 7px;
+    }
+
+    .toggle-k {
+      width: 10px;
+      height: 10px;
+      background: linear-gradient(135deg, #7B68EE 0%, #FF69B4 100%);
+      position: absolute;
+      top: 1px;
+      left: 1px;
+      border-radius: 50%;
+      box-shadow: 0 0 8px rgba(123, 104, 238, 0.5);
+    }
+
+    .toggle-l {
+      font-size: 10px;
+      font-weight: 700;
+      color: #1a1a1a;
+    }
+
+    /* Avatars */
+    .avatars {
+      display: flex;
+      gap: 4px;
+    }
+
+    .av {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #A8A8A8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      font-weight: 700;
+      background: linear-gradient(135deg, rgba(224, 220, 255, 0.9), rgba(255, 224, 240, 0.9));
+      color: #7B68EE;
+      border-radius: 4px;
+      box-shadow: 0 4px 12px rgba(123, 104, 238, 0.2), 2px 2px 0px rgba(255, 105, 180, 0.1);
+    }
+
+    .av-2 {
+      background: linear-gradient(135deg, rgba(255, 224, 240, 0.9), rgba(255, 250, 205, 0.9));
+      color: #FF69B4;
+      border-color: #FF69B4;
+    }
+
+    .av-3 {
+      background: linear-gradient(135deg, rgba(255, 250, 205, 0.9), rgba(220, 252, 231, 0.9));
+      color: #f59e0b;
+      border-color: #f59e0b;
+    }
+
+    .av-4 {
+      background: linear-gradient(135deg, rgba(220, 252, 231, 0.9), rgba(224, 220, 255, 0.9));
+      color: #22c55e;
+      border-color: #22c55e;
+    }
+
+    /* Table */
+    .tbl {
+      width: 100%;
+      font-size: 10px;
+      border-collapse: collapse;
+      border: 2px solid #A8A8A8;
+    }
+
+    .tbl th, .tbl td {
+      padding: 4px 6px;
+      border: 1px solid #D8D8D8;
+      text-align: left;
+      color: #1a1a1a;
+    }
+
+    .tbl th {
+      font-weight: 700;
+      background: linear-gradient(135deg, rgba(230, 220, 255, 0.7), rgba(255, 224, 240, 0.7));
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      font-size: 9px;
+      border-color: #A8A8A8;
+    }
+
+    .tbl td.r {
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <h1>Y2K Futurism</h1>
+            <p>Millennium digital chrome</p>
+        </div>
+        <div class="grid">
+            <div class="cell"><div class="stat"><div class="stat-label">Revenue</div><div class="stat-row"><span class="stat-value">$12.4k</span><span class="stat-change">↑ 8%</span></div></div></div>
+            <div class="cell"><div class="chart"><div class="bar" style="height:40%"></div><div class="bar" style="height:65%"></div><div class="bar" style="height:50%"></div><div class="bar" style="height:90%"></div><div class="bar" style="height:70%"></div><div class="bar" style="height:100%"></div><div class="bar" style="height:80%"></div></div></div>
+            <div class="cell"><div class="btn-pair"><button class="btn-p">Save</button><button class="btn-o">Cancel</button></div></div>
+            <div class="cell"><div class="input-g"><label class="input-l">Email</label><input type="text" class="input-f" placeholder="you@example.com"></div></div>
+            <div class="cell"><div class="badges"><span class="badge b-1">Active</span><span class="badge b-2">Online</span><span class="badge b-3">Pending</span></div></div>
+            <div class="cell"><div class="prog"><div class="prog-l">Upload</div><div class="prog-track"><div class="prog-fill"></div></div></div></div>
+            <div class="cell"><div class="toggle"><div class="toggle-t"><div class="toggle-k"></div></div><span class="toggle-l">Dark mode</span></div></div>
+            <div class="cell"><div class="avatars"><div class="av av-1">A</div><div class="av av-2">B</div><div class="av av-3">C</div><div class="av av-4">D</div></div></div>
+            <div class="cell"><table class="tbl"><tr><th>Item</th><th class="r">Qty</th></tr><tr><td>Widget</td><td class="r">128</td></tr><tr><td>Module</td><td class="r">64</td></tr></table></div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>vibe-paint · Holographic Futurism Thumbnail</title>
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      overflow: hidden;
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #050510;
+      color: #FFFFFF;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, rgba(0, 245, 255, 0.03) 0%, transparent 30%, transparent 70%, rgba(0, 245, 255, 0.02) 100%),
+                  linear-gradient(135deg, rgba(255, 0, 255, 0.03) 0%, transparent 25%, transparent 75%, rgba(255, 0, 255, 0.02) 100%);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.06;
+      animation: holo-drift 15s ease-in-out infinite;
+    }
+
+    @keyframes holo-drift {
+      0%, 100% { transform: translateX(0px); }
+      50% { transform: translateX(30px); }
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    .container {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero {
+      flex: 0 0 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero h1 {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 56px;
+      font-weight: 800;
+      margin: 0 0 6px 0;
+      background: linear-gradient(135deg, #00F5FF, #FF00FF, #00FFFF);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 20px rgba(0, 245, 255, 0.3));
+    }
+
+    .hero p {
+      font-size: 14px;
+      margin: 0;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .grid {
+      flex: 0 0 50%;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr 1fr;
+      overflow: hidden;
+    }
+
+    .cell {
+      padding: 8px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(10px);
+    }
+
+    .cell:nth-child(3n) { border-right: none; }
+    .cell:nth-child(n+7) { border-bottom: none; }
+
+    /* Component styling */
+    .stat { width: 100%; }
+    .stat-label { font-size: 11px; color: rgba(255, 255, 255, 0.4); margin-bottom: 4px; }
+    .stat-row { display: flex; align-items: center; gap: 4px; }
+    .stat-value { font-size: 16px; font-weight: 700; color: #00F5FF; text-shadow: 0 0 10px rgba(0, 245, 255, 0.5); }
+    .stat-change { font-size: 12px; color: #00FF88; }
+
+    .chart { display: flex; align-items: flex-end; justify-content: center; gap: 3px; width: 100%; height: 60px; }
+    .bar { background: linear-gradient(to top, #00F5FF, #FF00FF); width: 6px; border-radius: 3px; box-shadow: 0 0 16px rgba(0, 245, 255, 0.6); }
+
+    .btn-pair { display: flex; gap: 6px; }
+    .btn-p, .btn-o { padding: 6px 10px; font-size: 12px; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; cursor: pointer; font-weight: 600; font-family: 'Inter', sans-serif; }
+    .btn-p { background: rgba(0, 245, 255, 0.1); color: #00F5FF; box-shadow: 0 0 16px rgba(0, 245, 255, 0.3); border-color: #00F5FF; }
+    .btn-o { background: rgba(255, 255, 255, 0.03); color: rgba(255, 255, 255, 0.7); }
+
+    .input-g { width: 85%; }
+    .input-l { display: block; font-size: 11px; color: rgba(255, 255, 255, 0.4); margin-bottom: 3px; }
+    .input-f { width: 100%; padding: 5px 8px; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 6px; font-size: 12px; box-sizing: border-box; background: rgba(255, 255, 255, 0.03); color: #FFFFFF; backdrop-filter: blur(10px); }
+
+    .badges { display: flex; gap: 4px; flex-wrap: wrap; justify-content: center; }
+    .badge { padding: 3px 8px; font-size: 10px; border-radius: 12px; font-weight: 600; }
+    .b-1 { background: rgba(0, 255, 136, 0.2); color: #00FF88; border: 1px solid rgba(0, 255, 136, 0.3); }
+    .b-2 { background: rgba(255, 170, 0, 0.2); color: #FFAA00; border: 1px solid rgba(255, 170, 0, 0.3); }
+    .b-3 { background: rgba(255, 0, 85, 0.2); color: #FF0055; border: 1px solid rgba(255, 0, 85, 0.3); }
+
+    .prog { width: 85%; }
+    .prog-l { font-size: 11px; color: rgba(255, 255, 255, 0.4); margin-bottom: 4px; }
+    .prog-track { background: rgba(0, 245, 255, 0.1); border-radius: 8px; height: 4px; overflow: hidden; border: 1px solid rgba(0, 245, 255, 0.2); }
+    .prog-fill { background: linear-gradient(to right, #00F5FF, #FF00FF); height: 100%; width: 65%; box-shadow: 0 0 12px rgba(0, 245, 255, 0.4); }
+
+    .toggle { display: flex; align-items: center; gap: 6px; }
+    .toggle-t { width: 32px; height: 18px; background: rgba(255, 255, 255, 0.08); border-radius: 9px; position: relative; border: 1px solid rgba(255, 255, 255, 0.12); }
+    .toggle-k { position: absolute; top: 2px; left: 2px; width: 14px; height: 14px; background: #00F5FF; border-radius: 6px; transition: left 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); box-shadow: 0 0 12px rgba(0, 245, 255, 0.6); }
+    .toggle-l { font-size: 12px; color: #FFFFFF; }
+
+    .avatars { display: flex; gap: 3px; }
+    .av { width: 24px; height: 24px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: white; box-shadow: 0 0 12px rgba(0, 245, 255, 0.4); border: 1px solid rgba(255, 255, 255, 0.12); }
+    .av-1 { background: rgba(0, 245, 255, 0.2); color: #00F5FF; }
+    .av-2 { background: rgba(255, 0, 255, 0.2); color: #FF00FF; }
+    .av-3 { background: rgba(0, 255, 136, 0.2); color: #00FF88; }
+    .av-4 { background: rgba(255, 170, 0, 0.2); color: #FFAA00; }
+
+    .tbl { font-size: 11px; width: 100%; border-collapse: collapse; }
+    .tbl th, .tbl td { padding: 4px; text-align: left; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+    .tbl th { font-weight: 700; color: #00F5FF; text-shadow: 0 0 8px rgba(0, 245, 255, 0.3); }
+    .tbl td { color: rgba(255, 255, 255, 0.7); }
+    .tbl .r { text-align: right; }
+  </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <h1>Holographic</h1>
+            <p>Prismatic light refraction</p>
+        </div>
+        <div class="grid">
+            <div class="cell"><div class="stat"><div class="stat-label">Revenue</div><div class="stat-row"><span class="stat-value">$12.4k</span><span class="stat-change">↑ 8%</span></div></div></div>
+            <div class="cell"><div class="chart"><div class="bar" style="height:40%"></div><div class="bar" style="height:65%"></div><div class="bar" style="height:50%"></div><div class="bar" style="height:90%"></div><div class="bar" style="height:70%"></div><div class="bar" style="height:100%"></div><div class="bar" style="height:80%"></div></div></div>
+            <div class="cell"><div class="btn-pair"><button class="btn-p">Save</button><button class="btn-o">Cancel</button></div></div>
+            <div class="cell"><div class="input-g"><label class="input-l">Email</label><input type="text" class="input-f" placeholder="you@example.com"></div></div>
+            <div class="cell"><div class="badges"><span class="badge b-1">Active</span><span class="badge b-2">Online</span><span class="badge b-3">Pending</span></div></div>
+            <div class="cell"><div class="prog"><div class="prog-l">Upload</div><div class="prog-track"><div class="prog-fill"></div></div></div></div>
+            <div class="cell"><div class="toggle"><div class="toggle-t"><div class="toggle-k"></div></div><span class="toggle-l">Dark mode</span></div></div>
+            <div class="cell"><div class="avatars"><div class="av av-1">A</div><div class="av av-2">B</div><div class="av av-3">C</div><div class="av av-4">D</div></div></div>
+            <div class="cell"><table class="tbl"><tr><th>Item</th><th class="r">Qty</th></tr><tr><td>Widget</td><td class="r">128</td></tr><tr><td>Module</td><td class="r">64</td></tr></table></div>
+        </div>
+    </div>
+</body>
+</html>

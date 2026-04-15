@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neo Brutalism</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        html, body {
+            overflow: hidden;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Space Grotesk', sans-serif;
+            background: #FFFDF7;
+            color: #1A1A2E;
+        }
+
+        .container {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        .hero {
+            flex: 0 0 50%;
+            background: #FFFDF7;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 5px;
+            background: #1A1A2E;
+        }
+
+        .highlight {
+            position: absolute;
+            width: 290px;
+            height: 60px;
+            background: #FFE66D;
+            transform: rotate(-2deg);
+            z-index: 0;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 800;
+            margin: 0;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero p {
+            font-size: 13px;
+            margin: 8px 0 0 0;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .grid {
+            flex: 0 0 50%;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr;
+            background: #FFFDF7;
+            overflow: hidden;
+        }
+
+        .cell {
+            padding: 8px 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 3px solid #1A1A2E;
+            border-right: 3px solid #1A1A2E;
+            background: #FFFDF7;
+        }
+
+        .cell:nth-child(3n) { border-right: none; }
+        .cell:nth-child(n+7) { border-bottom: none; }
+
+        /* ── Stat ── */
+        .stat { width: 100%; }
+        .stat-label { font-size: 8px; font-weight: 700; text-transform: uppercase; color: #999; letter-spacing: 0.3px; }
+        .stat-row { display: flex; align-items: baseline; gap: 5px; }
+        .stat-value { font-size: 17px; font-weight: 800; }
+        .stat-change { font-size: 9px; font-weight: 700; color: #4ECDC4; }
+
+        /* ── Chart ── */
+        .chart { display: flex; align-items: flex-end; gap: 3px; height: 26px; width: 100%; justify-content: center; }
+        .bar { width: 8px; background: #FF6B6B; border: 2px solid #1A1A2E; }
+        .bar:nth-child(even) { background: #FFE66D; }
+        .bar:nth-child(3n) { background: #4ECDC4; }
+
+        /* ── Buttons ── */
+        .btn-pair { display: flex; gap: 5px; }
+        .btn-p { background: #FF6B6B; color: white; border: 3px solid #1A1A2E; padding: 5px 12px; font-size: 9px; font-weight: 700; text-transform: uppercase; font-family: 'Space Grotesk', sans-serif; cursor: pointer; box-shadow: 3px 3px 0 #1A1A2E; }
+        .btn-o { background: #4ECDC4; color: white; border: 3px solid #1A1A2E; padding: 5px 12px; font-size: 9px; font-weight: 700; text-transform: uppercase; font-family: 'Space Grotesk', sans-serif; cursor: pointer; box-shadow: 3px 3px 0 #1A1A2E; }
+
+        /* ── Input ── */
+        .input-g { display: flex; flex-direction: column; gap: 2px; width: 100%; }
+        .input-l { font-size: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; }
+        .input-f { border: 3px solid #1A1A2E; padding: 5px 8px; font-size: 9px; width: 100%; box-sizing: border-box; font-family: 'Space Grotesk', sans-serif; background: white; box-shadow: 2px 2px 0 #1A1A2E; }
+
+        /* ── Badges ── */
+        .badges { display: flex; gap: 4px; flex-wrap: wrap; justify-content: center; }
+        .badge { padding: 3px 8px; font-size: 8px; font-weight: 700; text-transform: uppercase; border: 2px solid #1A1A2E; }
+        .b-1 { background: #FFE66D; }
+        .b-2 { background: #FF6B6B; color: white; }
+        .b-3 { background: #4ECDC4; color: white; }
+
+        /* ── Progress ── */
+        .prog { display: flex; flex-direction: column; gap: 3px; width: 100%; }
+        .prog-l { font-size: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; }
+        .prog-track { width: 100%; height: 10px; border: 3px solid #1A1A2E; background: white; }
+        .prog-fill { height: 100%; width: 72%; background: #4ECDC4; }
+
+        /* ── Toggle ── */
+        .toggle { display: flex; align-items: center; gap: 6px; }
+        .toggle-t { width: 34px; height: 18px; border: 3px solid #1A1A2E; background: #FFE66D; position: relative; box-shadow: 2px 2px 0 #1A1A2E; }
+        .toggle-k { width: 12px; height: 12px; background: #1A1A2E; position: absolute; top: 0; right: 0; }
+        .toggle-l { font-size: 8px; font-weight: 700; text-transform: uppercase; }
+
+        /* ── Avatars ── */
+        .avatars { display: flex; }
+        .av { width: 22px; height: 22px; border: 2px solid #1A1A2E; margin-left: -5px; display: flex; align-items: center; justify-content: center; font-size: 8px; font-weight: 800; color: white; }
+        .av:first-child { margin-left: 0; }
+        .av-1 { background: #FF6B6B; } .av-2 { background: #4ECDC4; } .av-3 { background: #FFE66D; color: #1A1A2E; } .av-4 { background: #FF6B6B; }
+
+        /* ── Table ── */
+        .tbl { width: 100%; font-size: 7px; border-collapse: collapse; }
+        .tbl th { text-align: left; font-weight: 800; text-transform: uppercase; letter-spacing: 0.3px; padding: 2px 0; border-bottom: 3px solid #1A1A2E; }
+        .tbl td { padding: 2px 0; font-weight: 600; }
+        .tbl .r { text-align: right; font-weight: 800; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <div class="highlight"></div>
+            <h1>NEO BRUTALISM</h1>
+            <p>Bold. Loud. Unapologetic.</p>
+        </div>
+        <div class="grid">
+            <div class="cell"><div class="stat"><div class="stat-label">Users</div><div class="stat-row"><span class="stat-value">2,847</span><span class="stat-change">↑ 12%</span></div></div></div>
+            <div class="cell"><div class="chart"><div class="bar" style="height:40%"></div><div class="bar" style="height:70%"></div><div class="bar" style="height:50%"></div><div class="bar" style="height:90%"></div><div class="bar" style="height:65%"></div><div class="bar" style="height:100%"></div><div class="bar" style="height:80%"></div></div></div>
+            <div class="cell"><div class="btn-pair"><button class="btn-p">Action</button><button class="btn-o">Submit</button></div></div>
+            <div class="cell"><div class="input-g"><label class="input-l">Search</label><input type="text" class="input-f" placeholder="Type here..."></div></div>
+            <div class="cell"><div class="badges"><span class="badge b-1">UI</span><span class="badge b-2">UX</span><span class="badge b-3">Dev</span></div></div>
+            <div class="cell"><div class="prog"><div class="prog-l">Progress</div><div class="prog-track"><div class="prog-fill"></div></div></div></div>
+            <div class="cell"><div class="toggle"><div class="toggle-t"><div class="toggle-k"></div></div><span class="toggle-l">On</span></div></div>
+            <div class="cell"><div class="avatars"><div class="av av-1">A</div><div class="av av-2">B</div><div class="av av-3">C</div><div class="av av-4">D</div></div></div>
+            <div class="cell"><table class="tbl"><tr><th>Task</th><th class="r">Done</th></tr><tr><td>Design</td><td class="r">85%</td></tr><tr><td>Code</td><td class="r">60%</td></tr></table></div>
+        </div>
+    </div>
+</body>
+</html>

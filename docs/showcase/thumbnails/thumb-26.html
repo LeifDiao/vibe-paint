@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Premium</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        html, body {
+            overflow: hidden;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background: #08080a;
+            color: #e0e0e0;
+        }
+
+        .container {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 0 20px;
+            box-sizing: border-box;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bg-orb {
+            position: absolute;
+            top: -15%;
+            right: 0;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(139,92,246,0.18) 0%, rgba(139,92,246,0.05) 50%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: 0;
+        }
+
+        .hero {
+            flex: 0 0 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(139,92,246,0.4), transparent);
+        }
+
+        .hero h1 {
+            font-size: 52px;
+            font-weight: 800;
+            margin: 0 0 6px 0;
+            color: #fff;
+        }
+
+        .hero p {
+            font-size: 13px;
+            color: #777;
+            margin: 0;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+
+        .grid {
+            flex: 0 0 50%;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr;
+            background: transparent;
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cell {
+            padding: 8px 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            border-right: 1px solid rgba(255,255,255,0.05);
+            backdrop-filter: blur(6px);
+            background: rgba(255,255,255,0.02);
+        }
+
+        .cell:nth-child(3n) { border-right: none; }
+        .cell:nth-child(n+7) { border-bottom: none; }
+
+        /* ── Stat ── */
+        .stat { width: 100%; text-align: center; }
+        .stat-label { font-size: 7px; color: #666; text-transform: uppercase; letter-spacing: 0.5px; }
+        .stat-value { font-size: 17px; font-weight: 800; color: #06b6d4; text-shadow: 0 0 10px rgba(6,182,212,0.3); }
+
+        /* ── Chart ── */
+        .chart { display: flex; align-items: flex-end; gap: 3px; height: 26px; width: 100%; justify-content: center; }
+        .bar { width: 6px; border-radius: 2px 2px 0 0; background: linear-gradient(180deg, #8b5cf6, #06b6d4); opacity: 0.8; }
+
+        /* ── Buttons ── */
+        .btn-pair { display: flex; gap: 5px; }
+        .btn-p { background: linear-gradient(135deg, #8b5cf6, #7c3aed); color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 9px; font-weight: 700; font-family: 'Inter', sans-serif; cursor: pointer; box-shadow: 0 0 12px rgba(139,92,246,0.4); }
+        .btn-o { background: rgba(255,255,255,0.06); color: #c4b5fd; border: 1px solid rgba(139,92,246,0.3); padding: 6px 12px; border-radius: 6px; font-size: 9px; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; }
+
+        /* ── Input ── */
+        .input-g { display: flex; flex-direction: column; gap: 2px; width: 100%; }
+        .input-l { font-size: 7px; color: #666; text-transform: uppercase; letter-spacing: 0.5px; }
+        .input-f { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 5px 8px; border-radius: 6px; font-size: 9px; width: 100%; box-sizing: border-box; font-family: 'Inter', sans-serif; color: #e0e0e0; }
+        .input-f::placeholder { color: #555; }
+
+        /* ── Badges ── */
+        .badges { display: flex; gap: 4px; flex-wrap: wrap; justify-content: center; }
+        .badge { padding: 3px 8px; border-radius: 999px; font-size: 8px; font-weight: 600; }
+        .b-1 { background: rgba(139,92,246,0.2); color: #c4b5fd; border: 1px solid rgba(139,92,246,0.3); }
+        .b-2 { background: rgba(6,182,212,0.2); color: #67e8f9; border: 1px solid rgba(6,182,212,0.3); }
+        .b-3 { background: rgba(236,72,153,0.15); color: #f9a8d4; border: 1px solid rgba(236,72,153,0.3); }
+
+        /* ── Progress ── */
+        .prog { display: flex; flex-direction: column; gap: 3px; width: 100%; }
+        .prog-l { font-size: 7px; color: #666; text-transform: uppercase; letter-spacing: 0.5px; }
+        .prog-track { width: 100%; height: 4px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; }
+        .prog-fill { height: 100%; width: 68%; background: linear-gradient(90deg, #8b5cf6, #06b6d4); border-radius: 2px; }
+
+        /* ── Toggle ── */
+        .toggle { display: flex; align-items: center; gap: 6px; }
+        .toggle-t { width: 30px; height: 16px; background: rgba(139,92,246,0.35); border: 1px solid rgba(139,92,246,0.4); border-radius: 8px; position: relative; }
+        .toggle-k { width: 12px; height: 12px; background: #8b5cf6; border-radius: 50%; position: absolute; top: 1px; right: 1px; box-shadow: 0 0 6px rgba(139,92,246,0.5); }
+        .toggle-l { font-size: 8px; color: #777; }
+
+        /* ── Avatars ── */
+        .avatars { display: flex; }
+        .av { width: 22px; height: 22px; border-radius: 50%; border: 2px solid #0a0a0b; margin-left: -5px; display: flex; align-items: center; justify-content: center; font-size: 8px; font-weight: 700; color: white; }
+        .av:first-child { margin-left: 0; }
+        .av-1 { background: #8b5cf6; } .av-2 { background: #06b6d4; } .av-3 { background: #ec4899; } .av-4 { background: #f59e0b; }
+
+        /* ── Table ── */
+        .tbl { width: 100%; font-size: 7px; border-collapse: collapse; }
+        .tbl th { text-align: left; color: #555; text-transform: uppercase; letter-spacing: 0.3px; padding: 2px 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+        .tbl td { padding: 2px 0; color: #aaa; }
+        .tbl .r { text-align: right; color: #06b6d4; text-shadow: 0 0 6px rgba(6,182,212,0.2); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="bg-orb"></div>
+        <div class="hero">
+            <h1>Dark Premium</h1>
+            <p>Immersive. Elevated. Refined.</p>
+        </div>
+        <div class="grid">
+            <div class="cell"><div class="stat"><div class="stat-label">Revenue</div><div class="stat-value">$48.2k</div></div></div>
+            <div class="cell"><div class="chart"><div class="bar" style="height:35%"></div><div class="bar" style="height:60%"></div><div class="bar" style="height:45%"></div><div class="bar" style="height:85%"></div><div class="bar" style="height:70%"></div><div class="bar" style="height:100%"></div><div class="bar" style="height:80%"></div></div></div>
+            <div class="cell"><div class="btn-pair"><button class="btn-p">Activate</button><button class="btn-o">Details</button></div></div>
+            <div class="cell"><div class="input-g"><label class="input-l">Search</label><input type="text" class="input-f" placeholder="Search..."></div></div>
+            <div class="cell"><div class="badges"><span class="badge b-1">Pro</span><span class="badge b-2">Live</span><span class="badge b-3">VIP</span></div></div>
+            <div class="cell"><div class="prog"><div class="prog-l">Storage</div><div class="prog-track"><div class="prog-fill"></div></div></div></div>
+            <div class="cell"><div class="toggle"><div class="toggle-t"><div class="toggle-k"></div></div><span class="toggle-l">Dark</span></div></div>
+            <div class="cell"><div class="avatars"><div class="av av-1">A</div><div class="av av-2">B</div><div class="av av-3">C</div><div class="av av-4">D</div></div></div>
+            <div class="cell"><table class="tbl"><tr><th>Plan</th><th class="r">MRR</th></tr><tr><td>Pro</td><td class="r">$12k</td></tr><tr><td>Team</td><td class="r">$8k</td></tr></table></div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-commerce Modern</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        html, body {
+            overflow: hidden;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'DM Sans', sans-serif;
+            background: #FAFAFA;
+            color: #1A1A1A;
+        }
+
+        .container {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        /* ── Hero: top 50% ── */
+        .hero {
+            flex: 0 0 50%;
+            background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #FF5722;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 700;
+            margin: 0 0 6px 0;
+            letter-spacing: -1px;
+            color: #1A1A1A;
+        }
+
+        .hero p {
+            font-size: 14px;
+            color: #666666;
+            margin: 0;
+            font-weight: 500;
+        }
+
+        /* ── Components: bottom 50%, 3x3 grid ── */
+        .grid {
+            flex: 0 0 50%;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr;
+            background: white;
+            overflow: hidden;
+        }
+
+        .cell {
+            padding: 8px 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid #F0F0F0;
+            border-right: 1px solid #F0F0F0;
+            background: white;
+        }
+
+        .cell:nth-child(3n) { border-right: none; }
+        .cell:nth-child(n+7) { border-bottom: none; }
+
+        /* ── Stat ── */
+        .stat { width: 100%; }
+        .stat-label { font-size: 8px; color: #999999; font-weight: 600; text-transform: uppercase; letter-spacing: 0.3px; }
+        .stat-row { display: flex; align-items: baseline; gap: 5px; }
+        .stat-value { font-size: 17px; font-weight: 700; color: #1A1A1A; }
+        .stat-change { font-size: 9px; font-weight: 700; color: #FF5722; }
+
+        /* ── Mini chart ── */
+        .chart { display: flex; align-items: flex-end; gap: 3px; height: 26px; width: 100%; justify-content: center; }
+        .bar { width: 7px; border-radius: 2px 2px 0 0; background: #FF5722; }
+        .bar:nth-child(even) { background: #FFB74D; }
+
+        /* ── Buttons ── */
+        .btn-pair { display: flex; gap: 5px; }
+        .btn-p { background: #1A1A1A; color: white; border: none; padding: 6px 12px; border-radius: 20px; font-size: 9px; font-weight: 600; font-family: 'DM Sans', sans-serif; cursor: pointer; }
+        .btn-o { background: white; color: #1A1A1A; border: 1.5px solid #1A1A1A; padding: 6px 12px; border-radius: 20px; font-size: 9px; font-weight: 600; font-family: 'DM Sans', sans-serif; cursor: pointer; }
+
+        /* ── Input ── */
+        .input-g { display: flex; flex-direction: column; gap: 2px; width: 100%; }
+        .input-l { font-size: 8px; color: #666666; font-weight: 600; text-transform: uppercase; letter-spacing: 0.3px; }
+        .input-f { background: white; border: 1px solid #F0F0F0; padding: 5px 8px; border-radius: 10px; font-size: 9px; width: 100%; box-sizing: border-box; font-family: 'DM Sans', sans-serif; }
+
+        /* ── Badges ── */
+        .badges { display: flex; gap: 4px; flex-wrap: wrap; justify-content: center; }
+        .badge { padding: 3px 8px; border-radius: 999px; font-size: 8px; font-weight: 600; }
+        .b-1 { background: #FFF3E0; color: #E65100; }
+        .b-2 { background: #C8E6C9; color: #2E7D32; }
+        .b-3 { background: #FFECB3; color: #F57F17; }
+
+        /* ── Progress ── */
+        .prog { display: flex; flex-direction: column; gap: 3px; width: 100%; }
+        .prog-l { font-size: 8px; color: #999999; font-weight: 600; text-transform: uppercase; letter-spacing: 0.3px; }
+        .prog-track { width: 100%; height: 5px; background: #FAFAFA; border-radius: 3px; overflow: hidden; border: 0.5px solid #F0F0F0; }
+        .prog-fill { height: 100%; width: 72%; background: #FF5722; border-radius: 3px; }
+
+        /* ── Toggle ── */
+        .toggle { display: flex; align-items: center; gap: 6px; }
+        .toggle-t { width: 30px; height: 16px; background: #FF5722; border-radius: 8px; position: relative; }
+        .toggle-k { width: 12px; height: 12px; background: white; border-radius: 50%; position: absolute; top: 2px; right: 2px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
+        .toggle-l { font-size: 8px; color: #666666; font-weight: 500; }
+
+        /* ── Avatars ── */
+        .avatars { display: flex; }
+        .av { width: 22px; height: 22px; border-radius: 50%; border: 2px solid white; margin-left: -5px; display: flex; align-items: center; justify-content: center; font-size: 8px; font-weight: 700; color: white; }
+        .av:first-child { margin-left: 0; }
+        .av-1 { background: #FF5722; }
+        .av-2 { background: #FFB74D; }
+        .av-3 { background: #FF7043; }
+        .av-4 { background: #D84315; }
+
+        /* ── Table ── */
+        .tbl { width: 100%; font-size: 7px; border-collapse: collapse; }
+        .tbl th { text-align: left; font-weight: 700; color: #999999; text-transform: uppercase; letter-spacing: 0.3px; padding: 2px 0; border-bottom: 1px solid #F0F0F0; }
+        .tbl td { padding: 2px 0; color: #1A1A1A; font-weight: 500; }
+        .tbl .r { text-align: right; font-weight: 700; color: #1A1A1A; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <h1>E-commerce</h1>
+            <p>Modern shopping experience</p>
+        </div>
+        <div class="grid">
+            <div class="cell"><div class="stat"><div class="stat-label">Revenue</div><div class="stat-row"><span class="stat-value">$12.4k</span><span class="stat-change">↑ 8%</span></div></div></div>
+            <div class="cell"><div class="chart"><div class="bar" style="height:40%"></div><div class="bar" style="height:65%"></div><div class="bar" style="height:50%"></div><div class="bar" style="height:90%"></div><div class="bar" style="height:70%"></div><div class="bar" style="height:100%"></div><div class="bar" style="height:80%"></div></div></div>
+            <div class="cell"><div class="btn-pair"><button class="btn-p">Save</button><button class="btn-o">Cancel</button></div></div>
+            <div class="cell"><div class="input-g"><label class="input-l">Email</label><input type="text" class="input-f" placeholder="you@example.com"></div></div>
+            <div class="cell"><div class="badges"><span class="badge b-1">Active</span><span class="badge b-2">Online</span><span class="badge b-3">Pending</span></div></div>
+            <div class="cell"><div class="prog"><div class="prog-l">Upload</div><div class="prog-track"><div class="prog-fill"></div></div></div></div>
+            <div class="cell"><div class="toggle"><div class="toggle-t"><div class="toggle-k"></div></div><span class="toggle-l">Dark mode</span></div></div>
+            <div class="cell"><div class="avatars"><div class="av av-1">A</div><div class="av av-2">B</div><div class="av av-3">C</div><div class="av av-4">D</div></div></div>
+            <div class="cell"><table class="tbl"><tr><th>Item</th><th class="r">Qty</th></tr><tr><td>Widget</td><td class="r">128</td></tr><tr><td>Module</td><td class="r">64</td></tr></table></div>
+        </div>
+    </div>
+</body>
+</html>

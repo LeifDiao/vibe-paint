@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terminal Hacker Thumbnail</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      overflow: hidden;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: 'JetBrains Mono', monospace;
+      background: #0D0208;
+      color: #00FF41;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: repeating-linear-gradient(0deg, rgba(0, 255, 65, 0.05) 0px, rgba(0, 255, 65, 0.05) 1px, transparent 1px, transparent 2px);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .container {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+    }
+
+    .hero {
+      flex: 0 0 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      border-bottom: 1px solid rgba(0, 255, 65, 0.2);
+    }
+
+    .hero h1 {
+      font-size: 56px;
+      font-weight: 700;
+      margin: 0 0 6px 0;
+      font-family: 'JetBrains Mono', monospace;
+      color: #00FF41;
+      letter-spacing: 2px;
+      text-shadow: 0 0 10px rgba(0, 255, 65, 0.5), 0 0 20px rgba(0, 255, 65, 0.3);
+    }
+
+    .hero p {
+      font-size: 14px;
+      margin: 0;
+      font-family: 'JetBrains Mono', monospace;
+      color: #FFB000;
+      text-shadow: 0 0 8px rgba(255, 176, 0, 0.4);
+    }
+
+    .grid {
+      flex: 0 0 50%;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr 1fr;
+      overflow: hidden;
+    }
+
+    .cell {
+      padding: 8px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-right: 1px solid rgba(0, 255, 65, 0.15);
+      border-bottom: 1px solid rgba(0, 255, 65, 0.15);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    .cell:nth-child(3n) { border-right: none; }
+    .cell:nth-child(n+7) { border-bottom: none; }
+
+    .stat-value { color: #00FF41; font-weight: 700; text-shadow: 0 0 8px rgba(0, 255, 65, 0.5); }
+    .stat-change { color: #FFB000; font-size: 11px; }
+    .stat-label { color: rgba(0, 255, 65, 0.6); font-size: 10px; margin-bottom: 4px; }
+    .stat-row { display: flex; gap: 8px; align-items: center; }
+
+    .bar { background: #00FF41; border-radius: 0px; margin: 0 2px; width: 8px; box-shadow: 0 0 10px rgba(0, 255, 65, 0.4); }
+
+    .btn-p {
+      padding: 6px 12px;
+      background: transparent;
+      color: #00FF41;
+      border: 1px solid rgba(0, 255, 65, 0.5);
+      border-radius: 0px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: inset 0 0 10px rgba(0, 255, 65, 0.1);
+    }
+
+    .btn-p:hover {
+      box-shadow: inset 0 0 10px rgba(0, 255, 65, 0.2), 0 0 20px rgba(0, 255, 65, 0.4);
+      border-color: rgba(0, 255, 65, 0.8);
+    }
+
+    .btn-o {
+      padding: 6px 12px;
+      background: transparent;
+      color: #FFB000;
+      border: 1px solid rgba(255, 176, 0, 0.5);
+      border-radius: 0px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .input-l { display: block; font-size: 10px; color: rgba(0, 255, 65, 0.6); margin-bottom: 4px; text-transform: uppercase; }
+    .input-f {
+      width: 100%;
+      padding: 4px 6px;
+      border: 1px solid rgba(0, 255, 65, 0.2);
+      background: rgba(0, 0, 0, 0.5);
+      color: #00FF41;
+      border-radius: 0px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+    }
+    .input-f::placeholder { color: rgba(0, 255, 65, 0.3); }
+
+    .badge {
+      padding: 3px 8px;
+      border-radius: 0px;
+      font-size: 10px;
+      font-weight: 600;
+      display: inline-block;
+      margin: 0 2px;
+      border: 1px solid;
+      background: rgba(0, 255, 65, 0.1);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .b-1 { background: rgba(0, 255, 65, 0.1); color: #00FF41; border-color: rgba(0, 255, 65, 0.3); }
+    .b-2 { background: rgba(255, 176, 0, 0.1); color: #FFB000; border-color: rgba(255, 176, 0, 0.5); }
+    .b-3 { background: rgba(255, 0, 0, 0.1); color: #FF0000; border-color: rgba(255, 0, 0, 0.5); }
+
+    .prog-l { font-size: 10px; color: rgba(0, 255, 65, 0.6); margin-bottom: 3px; text-transform: uppercase; }
+    .prog-track { width: 100%; height: 6px; background: rgba(0, 0, 0, 0.5); border-radius: 0px; overflow: hidden; border: 1px solid rgba(0, 255, 65, 0.2); }
+    .prog-fill { width: 65%; height: 100%; background: #00FF41; box-shadow: 0 0 10px rgba(0, 255, 65, 0.5); }
+
+    .toggle { display: flex; align-items: center; gap: 6px; }
+    .toggle-t { width: 24px; height: 14px; background: rgba(0, 255, 65, 0.15); border-radius: 0px; position: relative; border: 1px solid rgba(0, 255, 65, 0.3); }
+    .toggle-k { width: 12px; height: 12px; background: #00FF41; border-radius: 0px; position: absolute; top: 1px; left: 1px; box-shadow: 0 0 5px rgba(0, 255, 65, 0.5); }
+    .toggle-l { font-size: 10px; text-transform: uppercase; }
+
+    .av {
+      width: 20px;
+      height: 20px;
+      border-radius: 0px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      font-weight: 600;
+      margin: 0 -8px;
+      border: 1px solid;
+      color: #00FF41;
+    }
+    .av-1 { background: rgba(0, 255, 65, 0.1); border-color: rgba(0, 255, 65, 0.3); }
+    .av-2 { background: rgba(255, 176, 0, 0.1); color: #FFB000; border-color: rgba(255, 176, 0, 0.5); }
+    .av-3 { background: rgba(0, 217, 255, 0.1); color: #00D9FF; border-color: rgba(0, 217, 255, 0.5); }
+    .av-4 { background: rgba(255, 0, 0, 0.1); color: #FF0000; border-color: rgba(255, 0, 0, 0.5); }
+
+    .tbl { width: 100%; font-size: 10px; border-collapse: collapse; }
+    .tbl th { color: #00FF41; font-weight: 700; text-align: left; padding: 2px; border-bottom: 1px solid rgba(0, 255, 65, 0.3); text-transform: uppercase; }
+    .tbl td { padding: 2px; border-bottom: 1px solid rgba(0, 255, 65, 0.15); }
+    .tbl .r { text-align: right; }
+  </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <h1>Terminal Hacker</h1>
+            <p>Green phosphor terminal</p>
+        </div>
+        <div class="grid">
+            <div class="cell"><div class="stat"><div class="stat-label">Revenue</div><div class="stat-row"><span class="stat-value">$12.4k</span><span class="stat-change">↑ 8%</span></div></div></div>
+            <div class="cell"><div class="chart"><div class="bar" style="height:40%"></div><div class="bar" style="height:65%"></div><div class="bar" style="height:50%"></div><div class="bar" style="height:90%"></div><div class="bar" style="height:70%"></div><div class="bar" style="height:100%"></div><div class="bar" style="height:80%"></div></div></div>
+            <div class="cell"><div class="btn-pair"><button class="btn-p">Save</button><button class="btn-o">Cancel</button></div></div>
+            <div class="cell"><div class="input-g"><label class="input-l">Email</label><input type="text" class="input-f" placeholder="you@example.com"></div></div>
+            <div class="cell"><div class="badges"><span class="badge b-1">Active</span><span class="badge b-2">Online</span><span class="badge b-3">Pending</span></div></div>
+            <div class="cell"><div class="prog"><div class="prog-l">Upload</div><div class="prog-track"><div class="prog-fill"></div></div></div></div>
+            <div class="cell"><div class="toggle"><div class="toggle-t"><div class="toggle-k"></div></div><span class="toggle-l">Dark mode</span></div></div>
+            <div class="cell"><div class="avatars"><div class="av av-1">A</div><div class="av av-2">B</div><div class="av av-3">C</div><div class="av av-4">D</div></div></div>
+            <div class="cell"><table class="tbl"><tr><th>Item</th><th class="r">Qty</th></tr><tr><td>Widget</td><td class="r">128</td></tr><tr><td>Module</td><td class="r">64</td></tr></table></div>
+        </div>
+    </div>
+</body>
+</html>

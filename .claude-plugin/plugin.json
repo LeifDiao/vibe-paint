@@ -1,0 +1,14 @@
+{
+  "name": "vibe-paint",
+  "description": "Reskin your entire project's UI in one command. 30 design styles, WCAG audit, content-aware polish.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Leif Diao",
+    "email": "leifdiao@gmail.com",
+    "url": "https://github.com/LeifDiao"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/LeifDiao/vibe-paint",
+  "repository": "https://github.com/LeifDiao/vibe-paint",
+  "keywords": ["ui", "design", "reskin", "accessibility", "tokens", "styling", "css", "paint", "polish"]
+}
